@@ -12,7 +12,7 @@ class Home extends Controller
 
     public function index()
     {
-        $this->loadView('home');
+        return $this->load->view('home');
     }
 
     public function test($param)

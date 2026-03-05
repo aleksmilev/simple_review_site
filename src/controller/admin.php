@@ -16,11 +16,11 @@ class Admin extends Controller
 
     public function index()
     {
-        $this->loadModel('CompanyModel');
-        $this->loadModel('ReviewModel');
-        $this->loadModel('UserModel');
-        $this->loadModel('TagModel');
-        $this->loadModel('FeedbackModel');
+        $this->load->model('CompanyModel');
+        $this->load->model('ReviewModel');
+        $this->load->model('UserModel');
+        $this->load->model('TagModel');
+        $this->load->model('FeedbackModel');
         
         $totalCompanies = count($this->model->CompanyModel->getAll());
         $totalReviews = count($this->model->ReviewModel->getAll());
@@ -34,13 +34,13 @@ class Admin extends Controller
         $this->data['totalTags'] = $totalTags;
         $this->data['recentFeedback'] = $recentFeedback;
         $this->data['pageTitle'] = 'Admin Dashboard';
-        $this->loadView('admin/index');
+        return $this->load->view('admin/index');
     }
 
     public function companies()
     {
-        $this->loadModel('CompanyModel');
-        $this->loadModel('ReviewModel');
+        $this->load->model('CompanyModel');
+        $this->load->model('ReviewModel');
         
         $post = $this->getPostData();
         
@@ -65,7 +65,7 @@ class Admin extends Controller
         
         $this->data['companies'] = $companies;
         $this->data['pageTitle'] = 'Manage Companies';
-        $this->loadView('admin/companies');
+        return $this->load->view('admin/companies');
     }
 
     public function company($action = null, $id = null)
@@ -82,8 +82,8 @@ class Admin extends Controller
 
     private function companyCreate()
     {
-        $this->loadModel('CompanyModel');
-        $this->loadModel('TagModel');
+        $this->load->model('CompanyModel');
+        $this->load->model('TagModel');
         
         $post = $this->getPostData();
         $errors = [];
@@ -125,7 +125,7 @@ class Admin extends Controller
                     $company = $this->model->CompanyModel->findBySlug($slug);
                     
                     if ($company && !empty($tagIds)) {
-                        $this->loadModel('CompanyTagModel');
+                        $this->load->model('CompanyTagModel');
                         foreach ($tagIds as $tagId) {
                             $this->model->CompanyTagModel->addTagToCompany($company['id'], $tagId);
                         }
@@ -145,14 +145,14 @@ class Admin extends Controller
         $tags = $this->model->TagModel->getAllOrdered();
         $this->data['tags'] = $tags;
         $this->data['pageTitle'] = 'Create Company';
-        $this->loadView('admin/company_form');
+        return $this->load->view('admin/company_form');
     }
 
     private function companyEdit($id)
     {
-        $this->loadModel('CompanyModel');
-        $this->loadModel('TagModel');
-        $this->loadModel('CompanyTagModel');
+        $this->load->model('CompanyModel');
+        $this->load->model('TagModel');
+        $this->load->model('CompanyTagModel');
         
         $company = $this->model->CompanyModel->get($id);
         
@@ -234,13 +234,13 @@ class Admin extends Controller
         $this->data['selectedTagIds'] = $selectedTagIds;
         $this->data['company'] = $company;
         $this->data['pageTitle'] = 'Edit Company';
-        $this->loadView('admin/company_form');
+        return $this->load->view('admin/company_form');
     }
 
     public function users()
     {
-        $this->loadModel('UserModel');
-        $this->loadModel('ReviewModel');
+        $this->load->model('UserModel');
+        $this->load->model('ReviewModel');
         
         $post = $this->getPostData();
         
@@ -279,14 +279,14 @@ class Admin extends Controller
         
         $this->data['users'] = $users;
         $this->data['pageTitle'] = 'Manage Users';
-        $this->loadView('admin/users');
+        return $this->load->view('admin/users');
     }
 
     public function reviews()
     {
-        $this->loadModel('ReviewModel');
-        $this->loadModel('CompanyModel');
-        $this->loadModel('UserModel');
+        $this->load->model('ReviewModel');
+        $this->load->model('CompanyModel');
+        $this->load->model('UserModel');
         
         $post = $this->getPostData();
         
@@ -315,13 +315,13 @@ class Admin extends Controller
         
         $this->data['reviews'] = $reviews;
         $this->data['pageTitle'] = 'Manage Reviews';
-        $this->loadView('admin/reviews');
+        return $this->load->view('admin/reviews');
     }
 
     public function tags()
     {
-        $this->loadModel('TagModel');
-        $this->loadModel('CompanyTagModel');
+        $this->load->model('TagModel');
+        $this->load->model('CompanyTagModel');
         
         $post = $this->getPostData();
         
@@ -345,7 +345,7 @@ class Admin extends Controller
         
         $this->data['tags'] = $tags;
         $this->data['pageTitle'] = 'Manage Tags';
-        $this->loadView('admin/tags');
+        return $this->load->view('admin/tags');
     }
 
     public function tag($action = null, $id = null)
@@ -362,7 +362,7 @@ class Admin extends Controller
 
     private function tagCreate()
     {
-        $this->loadModel('TagModel');
+        $this->load->model('TagModel');
         
         $post = $this->getPostData();
         $errors = [];
@@ -404,12 +404,12 @@ class Admin extends Controller
         }
         
         $this->data['pageTitle'] = 'Create Tag';
-        $this->loadView('admin/tag_form');
+        return $this->load->view('admin/tag_form');
     }
 
     private function tagEdit($id)
     {
-        $this->loadModel('TagModel');
+        $this->load->model('TagModel');
         
         $tag = $this->model->TagModel->get($id);
         
@@ -461,18 +461,18 @@ class Admin extends Controller
         
         $this->data['tag'] = $tag;
         $this->data['pageTitle'] = 'Edit Tag';
-        $this->loadView('admin/tag_form');
+        return $this->load->view('admin/tag_form');
     }
 
     public function feedback()
     {
-        $this->loadModel('FeedbackModel');
+        $this->load->model('FeedbackModel');
         
         $feedback = $this->model->FeedbackModel->getAll([], 'created_at DESC');
         
         $this->data['feedback'] = $feedback;
         $this->data['pageTitle'] = 'View Feedback';
-        $this->loadView('admin/feedback');
+        return $this->load->view('admin/feedback');
     }
 }
 

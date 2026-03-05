@@ -10,9 +10,9 @@ class Review extends Controller
 
     public function index()
     {
-        $this->loadModel('ReviewModel');
-        $this->loadModel('CompanyModel');
-        $this->loadModel('UserModel');
+        $this->load->model('ReviewModel');
+        $this->load->model('CompanyModel');
+        $this->load->model('UserModel');
         
         $allReviews = $this->model->ReviewModel->getAll([], 'created_at DESC');
         
@@ -44,7 +44,7 @@ class Review extends Controller
         
         $this->data['reviewsByCompany'] = $reviewsByCompany;
         $this->data['pageTitle'] = 'All Reviews';
-        $this->loadView('review/index');
+        return $this->load->view('review/index');
     }
 
     public function company($id = null)
@@ -54,8 +54,8 @@ class Review extends Controller
             return;
         }
 
-        $this->loadModel('CompanyModel');
-        $this->loadModel('ReviewModel');
+        $this->load->model('CompanyModel');
+        $this->load->model('ReviewModel');
         
         $companies = $this->model->CompanyModel->getAll([], 'name ASC');
         
@@ -68,7 +68,7 @@ class Review extends Controller
         $this->data['companies'] = $companies;
         $this->data['pageTitle'] = 'Companies';
         $this->data['currentPage'] = 'companies';
-        $this->loadView('review/company');
+        return $this->load->view('review/company');
     }
 
     private function companySingle($id)
@@ -79,10 +79,10 @@ class Review extends Controller
             
         }
         
-        $this->loadModel('CompanyModel');
-        $this->loadModel('ReviewModel');
-        $this->loadModel('UserModel');
-        $this->loadModel('CompanyTagModel');
+        $this->load->model('CompanyModel');
+        $this->load->model('ReviewModel');
+        $this->load->model('UserModel');
+        $this->load->model('CompanyTagModel');
         
         $company = $this->model->CompanyModel->get($id);
         
@@ -109,7 +109,7 @@ class Review extends Controller
         $this->data['average_rating'] = $ratingInfo['average_rating'] ?? 0;
         $this->data['total_reviews'] = $ratingInfo['total_reviews'] ?? 0;
         $this->data['pageTitle'] = htmlspecialchars($company['name']);
-        $this->loadView('review/company_single');
+        return $this->load->view('review/company_single');
     }
 
     public function search($query = null)
@@ -121,10 +121,10 @@ class Review extends Controller
             $query = $post['query'] ?? '';
         }
         
-        $this->loadModel('CompanyModel');
-        $this->loadModel('ReviewModel');
-        $this->loadModel('CompanyTagModel');
-        $this->loadModel('TagModel');
+        $this->load->model('CompanyModel');
+        $this->load->model('ReviewModel');
+        $this->load->model('CompanyTagModel');
+        $this->load->model('TagModel');
         
         if (!empty($tagId)) {
             $companies = $this->model->CompanyTagModel->getCompaniesByTag($tagId);
@@ -148,7 +148,7 @@ class Review extends Controller
         $this->data['tags'] = $allTags;
         $this->data['selectedTag'] = $tagId;
         $this->data['pageTitle'] = 'Search Results';
-        $this->loadView('review/search');
+        return $this->load->view('review/search');
     }
 }
 

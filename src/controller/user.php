@@ -19,7 +19,7 @@ class User extends Controller
             if (empty($username) || empty($password)) {
                 $this->data['error'] = 'Please fill in all fields';
             } else {
-                $this->loadModel('UserModel');
+                $this->load->model('UserModel');
                 $user = $this->model->UserModel->findByUsername($username);
                 
                 if ($user && password_verify($password, $user['password_hash'])) {
@@ -36,7 +36,7 @@ class User extends Controller
         }
         
         $this->data['pageTitle'] = 'Login';
-        $this->loadView('user/login');
+        return $this->load->view('user/login');
     }
 
     public function register()
@@ -74,7 +74,7 @@ class User extends Controller
             }
             
             if (empty($errors)) {
-                $this->loadModel('UserModel');
+                $this->load->model('UserModel');
                 
                 if ($this->model->UserModel->findByUsername($username)) {
                     $errors[] = 'Username already exists';
@@ -109,7 +109,7 @@ class User extends Controller
         }
         
         $this->data['pageTitle'] = 'Register';
-        $this->loadView('user/register');
+        return $this->load->view('user/register');
     }
 
     public function logout()
@@ -126,7 +126,7 @@ class User extends Controller
             exit;
         }
         
-        $this->loadModel('UserModel');
+        $this->load->model('UserModel');
         $user = $this->model->UserModel->get($_SESSION['user_id']);
         
         if (!$user) {
@@ -195,14 +195,14 @@ class User extends Controller
             }
         }
         
-        $this->loadModel('ReviewModel');
+        $this->load->model('ReviewModel');
         $userReviews = $this->model->ReviewModel->getByUser($user['id']);
         $reviewCount = count($userReviews);
         
         $this->data['user'] = $user;
         $this->data['reviewCount'] = $reviewCount;
         $this->data['pageTitle'] = 'My Profile';
-        $this->loadView('user/profile');
+        return $this->load->view('user/profile');
     }
 
     public function reviews()
@@ -212,17 +212,17 @@ class User extends Controller
             exit;
         }
         
-        $this->loadModel('ReviewModel');
+        $this->load->model('ReviewModel');
         $reviews = $this->model->ReviewModel->getByUser($_SESSION['user_id']);
         
         $this->data['reviews'] = $reviews;
         $this->data['pageTitle'] = 'My Reviews';
-        $this->loadView('user/reviews');
+        return $this->load->view('user/reviews');
     }
 
     public function log_as_user()
     {
-        $this->loadModel('UserModel');
+        $this->load->model('UserModel');
         $user = $this->model->UserModel->findByUsername('john_doe');
         
         if ($user) {
@@ -240,7 +240,7 @@ class User extends Controller
 
     public function log_as_admin()
     {
-        $this->loadModel('UserModel');
+        $this->load->model('UserModel');
         $user = $this->model->UserModel->findByUsername('admin');
         
         if ($user) {

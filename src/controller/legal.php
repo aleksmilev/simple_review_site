@@ -11,19 +11,19 @@ class Legal extends Controller
     public function privacy()
     {
         $this->data['pageTitle'] = 'Privacy Policy';
-        $this->loadView('legal/privacy');
+        return $this->load->view('legal/privacy');
     }
 
     public function terms()
     {
         $this->data['pageTitle'] = 'Terms of Service';
-        $this->loadView('legal/terms');
+        return $this->load->view('legal/terms');
     }
 
     public function about()
     {
         $this->data['pageTitle'] = 'About Us';
-        $this->loadView('legal/about');
+        return $this->load->view('legal/about');
     }
 
     public function contact()
@@ -35,7 +35,7 @@ class Legal extends Controller
             $subject = $post['subject'] ?? '';
             $message = $post['message'] ?? '';
 
-            $this->loadModel('FeedbackModel');
+            $this->load->model('FeedbackModel');
             $this->model->FeedbackModel->add([
                 'name' => $name,
                 'email' => $email,
@@ -48,6 +48,6 @@ class Legal extends Controller
         }
 
         $this->data['pageTitle'] = 'Contact';
-        $this->loadView('legal/contact');
+        return $this->load->view('legal/contact');
     }
 }

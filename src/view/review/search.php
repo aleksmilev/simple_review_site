@@ -3,13 +3,16 @@
         <h1>Search Results</h1>
         <p class="intro-text">Search results for: "<strong><?php echo htmlspecialchars($query); ?></strong>"</p>
         
-        <div style="margin-bottom: 2rem;">
+        <div class="search-form-container">
             <form method="POST" action="/review/search" class="search-form">
-                <div class="form-group" style="display: flex; gap: 1rem; align-items: flex-end;">
-                    <div style="flex: 1;">
-                        <input type="text" name="query" value="<?php echo htmlspecialchars($query); ?>" placeholder="Search companies..." required>
+                <div class="search-form-group">
+                    <div class="search-input-wrapper">
+                        <svg class="search-form-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <input type="text" name="query" value="<?php echo htmlspecialchars($query); ?>" placeholder="Search companies..." class="search-form-input" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Search</button>
+                    <button type="submit" class="btn btn-primary search-submit-btn">Search</button>
                 </div>
             </form>
         </div>

@@ -99,5 +99,30 @@
         align-items: flex-start;
         gap: 0.5rem;
     }
+    
+    .search-form-group {
+        flex-direction: column;
+    }
+    
+    .search-submit-btn {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .pagination-numbers {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .pagination-link {
+        min-width: 2rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+    }
 }
 

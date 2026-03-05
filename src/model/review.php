@@ -31,5 +31,12 @@ class ReviewModel extends Model
         $stmt = $this->db->query($sql, ['company_id' => $companyId]);
         return $stmt->fetch();
     }
+
+    public function getDistinctCompanyIds()
+    {
+        $sql = "SELECT DISTINCT company_id FROM {$this->table} ORDER BY company_id";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(\PDO::FETCH_COLUMN);
+    }
 }
 

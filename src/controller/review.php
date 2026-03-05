@@ -82,6 +82,7 @@ class Review extends Controller
         $this->loadModel('CompanyModel');
         $this->loadModel('ReviewModel');
         $this->loadModel('UserModel');
+        $this->loadModel('CompanyTagModel');
         
         $company = $this->model->CompanyModel->get($id);
         
@@ -92,6 +93,7 @@ class Review extends Controller
         
         $reviews = $this->model->ReviewModel->getByCompany($id);
         $ratingInfo = $this->model->ReviewModel->getAverageRating($id);
+        $tags = $this->model->CompanyTagModel->getTagsByCompany($id);
         
         foreach ($reviews as &$review) {
             if ($review['user_id']) {
@@ -102,6 +104,7 @@ class Review extends Controller
         
         $this->data['company'] = $company;
         $this->data['reviews'] = $reviews;
+        $this->data['tags'] = $tags;
         $this->data['currentPage'] = 'company';
         $this->data['average_rating'] = $ratingInfo['average_rating'] ?? 0;
         $this->data['total_reviews'] = $ratingInfo['total_reviews'] ?? 0;
@@ -111,20 +114,26 @@ class Review extends Controller
 
     public function search($query = null)
     {
-        if (empty($query)) {
-            $post = $this->getPostData();
-            $query = $post['query'] ?? '';
-        }
+        $post = $this->getPostData();
+        $tagId = $_GET['tag'] ?? null;
         
         if (empty($query)) {
-            header('Location: /review/company');
-            exit;
+            $query = $post['query'] ?? '';
         }
         
         $this->loadModel('CompanyModel');
         $this->loadModel('ReviewModel');
+        $this->loadModel('CompanyTagModel');
+        $this->loadModel('TagModel');
         
-        $companies = $this->model->CompanyModel->search($query);
+        if (!empty($tagId)) {
+            $companies = $this->model->CompanyTagModel->getCompaniesByTag($tagId);
+        } elseif (!empty($query)) {
+            $companies = $this->model->CompanyModel->search($query);
+        } else {
+            header('Location: /review/company');
+            exit;
+        }
         
         foreach ($companies as &$company) {
             $ratingInfo = $this->model->ReviewModel->getAverageRating($company['id']);
@@ -132,8 +141,12 @@ class Review extends Controller
             $company['total_reviews'] = $ratingInfo['total_reviews'] ?? 0;
         }
         
+        $allTags = $this->model->TagModel->getAllOrdered();
+        
         $this->data['companies'] = $companies;
         $this->data['query'] = htmlspecialchars($query);
+        $this->data['tags'] = $allTags;
+        $this->data['selectedTag'] = $tagId;
         $this->data['pageTitle'] = 'Search Results';
         $this->loadView('review/search');
     }

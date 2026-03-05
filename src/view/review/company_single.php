@@ -14,6 +14,19 @@
             <p class="intro-text"><?php echo nl2br(htmlspecialchars($company['description'])); ?></p>
         <?php endif; ?>
         
+        <?php if (!empty($tags)): ?>
+            <div class="company-tags">
+                <h3>Tags</h3>
+                <div class="tags-list">
+                    <?php foreach ($tags as $tag): ?>
+                        <a href="/review/search?tag=<?php echo $tag['id']; ?>" class="tag-badge" style="background-color: <?php echo htmlspecialchars($tag['color']); ?>20; color: <?php echo htmlspecialchars($tag['color']); ?>; border-color: <?php echo htmlspecialchars($tag['color']); ?>;">
+                            <?php echo htmlspecialchars($tag['name']); ?>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+        
         <div class="company-rating-summary">
             <?php if ($total_reviews > 0): ?>
                 <div class="rating-display-large">

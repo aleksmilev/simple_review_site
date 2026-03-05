@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/assets/css/legal.css">
     <link rel="stylesheet" href="/assets/css/auth.css">
     <link rel="stylesheet" href="/assets/css/popup.css">
+    <link rel="stylesheet" href="/assets/css/admin.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
 </head>
 <body>

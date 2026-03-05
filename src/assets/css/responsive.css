@@ -156,5 +156,51 @@
         font-size: 0.8rem;
         padding: 0.4rem 0.75rem;
     }
+    
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .admin-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-table-container {
+        overflow-x: auto;
+    }
+    
+    .admin-table {
+        min-width: 800px;
+    }
+    
+    .admin-tags-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .quick-actions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .quick-action-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .quick-action-icon {
+        font-size: 2.5rem;
+    }
+    
+    .admin-review-header {
+        flex-direction: column;
+    }
+    
+    .admin-tag-actions {
+        flex-direction: column;
+    }
+    
+    .admin-tag-actions .btn {
+        width: 100%;
+    }
 }
 

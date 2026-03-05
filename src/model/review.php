@@ -18,7 +18,7 @@ class ReviewModel extends Model
     public function getAnonymous($limit = null)
     {
         $sql = "SELECT * FROM {$this->table} WHERE user_id IS NULL ORDER BY created_at DESC";
-        if ($limit !== null) {
+        if ($limit != null) {
             $sql .= " LIMIT {$limit}";
         }
         $stmt = $this->db->query($sql);

@@ -94,7 +94,7 @@ setTimeout(() => {
 
 document.addEventListener('click', function(event) {
     const popup = document.getElementById('successPopup');
-    if (popup && event.target === popup) {
+    if (popup && event.target == popup) {
         closeSuccessPopup();
     }
 });

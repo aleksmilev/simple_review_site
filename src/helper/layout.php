@@ -27,7 +27,6 @@ class Layout
 
     private function loadView($viewPath)
     {
-        // Extract data variables for the view
         extract($this->viewData);
         
         $contentPath = __DIR__ . '/../view/' . $viewPath . '.php';

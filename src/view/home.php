@@ -4,7 +4,7 @@
             <h1 class="hero-title">Find and Review Companies</h1>
             <p class="hero-subtitle">Discover trusted businesses and share your experiences. Help others make informed decisions.</p>
             <div class="hero-actions">
-                <a href="/company/index" class="btn btn-primary btn-large">Browse Companies</a>
+                <a href="/company" class="btn btn-primary btn-large">Browse Companies</a>
                 <a href="/user/register" class="btn btn-outline btn-large">Join Now</a>
             </div>
         </div>

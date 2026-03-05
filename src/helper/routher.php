@@ -15,7 +15,7 @@ class Routher
 
         $path = parse_url($endpoint, PHP_URL_PATH) ?? '/';
         if ($path == '/' || $path == '') {
-            $endpoint = '/home/index';
+            $endpoint = '/home';
         }
 
         $normalizedEndpoint = $this->handleEndpoint($endpoint);
@@ -31,10 +31,10 @@ class Routher
         $path = parse_url($endpoint, PHP_URL_PATH);
         $path = trim($path, "/");
 
-        $segments = $path === "" ? [] : explode("/", $path);
+        $segments = $path == "" ? [] : explode("/", $path);
 
-        $controller = isset($segments[0]) && $segments[0] !== "" ? strtolower($segments[0]) : "home";
-        $method = isset($segments[1]) && $segments[1] !== "" ? $segments[1] : "index";
+        $controller = isset($segments[0]) && $segments[0] != "" ? strtolower($segments[0]) : "home";
+        $method = isset($segments[1]) && $segments[1] != "" ? $segments[1] : "index";
         $params = array_slice($segments, 2);
 
         return [

@@ -13,10 +13,10 @@
                 <div class="footer-section">
                     <h4>Navigation</h4>
                     <ul class="footer-links">
-                        <li><a href="/home/index" class="footer-link">Home</a></li>
-                        <li><a href="/company/index" class="footer-link">Companies</a></li>
-                        <li><a href="/review/index" class="footer-link">Reviews</a></li>
-                        <li><a href="/tag/index" class="footer-link">Tags</a></li>
+                        <li><a href="/home" class="footer-link">Home</a></li>
+                        <li><a href="/company" class="footer-link">Companies</a></li>
+                        <li><a href="/review" class="footer-link">Reviews</a></li>
+                        <li><a href="/tag" class="footer-link">Tags</a></li>
                     </ul>
                 </div>
                 
@@ -26,8 +26,8 @@
                         <?php if (isset($user) && $user): ?>
                             <li><a href="/user/profile" class="footer-link">My Profile</a></li>
                             <li><a href="/user/reviews" class="footer-link">My Reviews</a></li>
-                            <?php if (isset($user['role']) && $user['role'] === 'admin'): ?>
-                                <li><a href="/admin/index" class="footer-link">Admin Panel</a></li>
+                            <?php if (isset($user['role']) && $user['role'] == 'admin'): ?>
+                                <li><a href="/admin" class="footer-link">Admin Panel</a></li>
                             <?php endif; ?>
                         <?php else: ?>
                             <li><a href="/user/login" class="footer-link">Login</a></li>

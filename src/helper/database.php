@@ -105,11 +105,11 @@ class Database
             $sql .= " WHERE " . implode(' AND ', $whereParts);
         }
 
-        if ($orderBy !== null) {
+        if ($orderBy != null) {
             $sql .= " ORDER BY {$orderBy}";
         }
 
-        if ($limit !== null) {
+        if ($limit != null) {
             $sql .= " LIMIT {$limit}";
         }
 

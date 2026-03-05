@@ -9,6 +9,21 @@ class Controller
     public function __construct()
     {
         $this->model = new stdClass();
+        
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (isset($_SESSION['user_id'])) {
+            try {
+                $this->loadModel('UserModel');
+                $user = $this->model->UserModel->get($_SESSION['user_id']);
+                if ($user) {
+                    $this->data['user'] = $user;
+                }
+            } catch (Exception $e) {
+            }
+        }
     }
 
     protected function loadView($viewPath)

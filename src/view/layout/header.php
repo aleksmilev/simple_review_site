@@ -11,17 +11,16 @@
     <header class="header">
         <div class="header-container">
             <div class="header-content">
-                <a href="/home/index" class="logo">
+                <a href="/home" class="logo">
                     <div class="logo-icon">R</div>
                     <span>ReviewSite</span>
                 </a>
                 
                 <nav class="nav">
                     <ul class="nav-links">
-                        <li><a href="/home/index" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'home') ? 'active' : ''; ?>">Home</a></li>
-                        <li><a href="/company/index" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'companies') ? 'active' : ''; ?>">Companies</a></li>
-                        <li><a href="/review/index" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'reviews') ? 'active' : ''; ?>">Reviews</a></li>
-                        <li><a href="/tag/index" class="nav-link <?php echo (isset($currentPage) && $currentPage === 'tags') ? 'active' : ''; ?>">Tags</a></li>
+                        <li><a href="/home" class="nav-link <?php echo (isset($currentPage) && $currentPage == 'home') ? 'active' : ''; ?>">Home</a></li>
+                        <li><a href="/review/company" class="nav-link <?php echo (isset($currentPage) && $currentPage == 'companies') ? 'active' : ''; ?>">Companies</a></li>
+                        <li><a href="/review" class="nav-link <?php echo (isset($currentPage) && $currentPage == 'reviews') ? 'active' : ''; ?>">Reviews</a></li>
                     </ul>
                 </nav>
                 
@@ -39,8 +38,8 @@
                                 <?php echo strtoupper(substr($user['username'], 0, 1)); ?>
                             </div>
                         </div>
-                        <?php if (isset($user['role']) && $user['role'] === 'admin'): ?>
-                            <a href="/admin/index" class="btn btn-outline">
+                        <?php if (isset($user['role']) && $user['role'] == 'admin'): ?>
+                            <a href="/admin" class="btn btn-outline">
                                 <span class="btn-text">Admin</span>
                             </a>
                         <?php endif; ?>

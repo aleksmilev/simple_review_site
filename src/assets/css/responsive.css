@@ -1,0 +1,78 @@
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    
+    .search-container {
+        max-width: 200px;
+    }
+    
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    .user-actions .btn-text {
+        display: none;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .cta-content h2 {
+        font-size: 2rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .legal-page {
+        padding: 1.5rem;
+    }
+    
+    .legal-page h1 {
+        font-size: 2rem;
+    }
+    
+    .success-popup-content {
+        padding: 2rem 1.5rem;
+    }
+    
+    .success-icon {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.5rem;
+    }
+    
+    .auth-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .review-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .profile-actions {
+        flex-direction: column;
+    }
+    
+    .profile-actions .btn {
+        margin-left: 0 !important;
+        width: 100%;
+    }
+}
+

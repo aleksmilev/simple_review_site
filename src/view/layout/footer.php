@@ -71,6 +71,7 @@
             </div>
         </div>
     </footer>
+    <script src="/assets/js/popup.js"></script>
 </body>
 </html>
 

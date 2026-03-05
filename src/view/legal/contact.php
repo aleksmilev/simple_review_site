@@ -17,7 +17,7 @@
         <div class="contact-grid">
             <div class="contact-section">
                 <h2>Get in Touch</h2>
-                <form class="contact-form" method="POST" action="/legal/contact">
+                <form class="contact-form" method="POST" action="/legal/contact" data-success="<?php echo (isset($success) && $success) ? 'true' : 'false'; ?>">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" required>
@@ -69,33 +69,3 @@
         </div>
     </div>
 </div>
-
-<script>
-function closeSuccessPopup() {
-    const popup = document.getElementById('successPopup');
-    if (popup) {
-        popup.style.opacity = '0';
-        setTimeout(() => {
-            popup.style.display = 'none';
-        }, 300);
-    }
-}
-
-<?php if (isset($success) && $success): ?>
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.reset();
-}
-
-setTimeout(() => {
-    closeSuccessPopup();
-}, 5000);
-<?php endif; ?>
-
-document.addEventListener('click', function(event) {
-    const popup = document.getElementById('successPopup');
-    if (popup && event.target == popup) {
-        closeSuccessPopup();
-    }
-});
-</script>

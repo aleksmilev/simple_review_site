@@ -1,7 +1,7 @@
 <div class="container">
     <div class="legal-page">
         <h1>My Reviews</h1>
-        <p class="intro-text">All reviews you have submitted on ReviewSite</p>
+        <p class="intro-text">All reviews you have submitted on ReviewHub</p>
         
         <?php if (empty($reviews)): ?>
             <div class="empty-state">

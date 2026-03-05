@@ -13,7 +13,7 @@
 
 <div class="container">
     <section class="features-section">
-        <h2 class="section-title">Why ReviewSite?</h2>
+        <h2 class="section-title">Why ReviewHub?</h2>
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">⭐</div>

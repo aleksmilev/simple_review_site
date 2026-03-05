@@ -5,12 +5,12 @@
         
         <section>
             <h2>1. Acceptance of Terms</h2>
-            <p>By accessing and using ReviewSite, you accept and agree to be bound by the terms and provision of this agreement.</p>
+            <p>By accessing and using ReviewHub, you accept and agree to be bound by the terms and provision of this agreement.</p>
         </section>
 
         <section>
             <h2>2. Use License</h2>
-            <p>Permission is granted to temporarily access the materials on ReviewSite for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title.</p>
+            <p>Permission is granted to temporarily access the materials on ReviewHub for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title.</p>
         </section>
 
         <section>
@@ -37,22 +37,22 @@
 
         <section>
             <h2>6. Intellectual Property</h2>
-            <p>The content on ReviewSite, including text, graphics, logos, and software, is the property of ReviewSite or its content suppliers and is protected by copyright and trademark laws.</p>
+            <p>The content on ReviewHub, including text, graphics, logos, and software, is the property of ReviewHub or its content suppliers and is protected by copyright and trademark laws.</p>
         </section>
 
         <section>
             <h2>7. Disclaimer</h2>
-            <p>The materials on ReviewSite are provided on an 'as is' basis. ReviewSite makes no warranties, expressed or implied, and hereby disclaims all other warranties.</p>
+            <p>The materials on ReviewHub are provided on an 'as is' basis. ReviewHub makes no warranties, expressed or implied, and hereby disclaims all other warranties.</p>
         </section>
 
         <section>
             <h2>8. Limitations</h2>
-            <p>In no event shall ReviewSite or its suppliers be liable for any damages arising out of the use or inability to use the materials on ReviewSite.</p>
+            <p>In no event shall ReviewHub or its suppliers be liable for any damages arising out of the use or inability to use the materials on ReviewHub.</p>
         </section>
 
         <section>
             <h2>9. Modifications</h2>
-            <p>ReviewSite may revise these terms of service at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms.</p>
+            <p>ReviewHub may revise these terms of service at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms.</p>
         </section>
 
         <section>

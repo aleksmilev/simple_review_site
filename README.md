@@ -1,4 +1,4 @@
-# ReviewSite - Company Review Platform
+# ReviewHub - Company Review Platform
 
 A comprehensive PHP-based web application for reviewing companies, built with a custom MVC architecture. Users can browse companies, leave reviews, search by tags, and administrators can manage all content through a dedicated admin panel.
 

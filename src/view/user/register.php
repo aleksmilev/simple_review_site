@@ -2,7 +2,7 @@
     <div class="auth-page">
         <div class="auth-card">
             <h1>Create Account</h1>
-            <p class="auth-subtitle">Join ReviewSite and start sharing your experiences</p>
+            <p class="auth-subtitle">Join ReviewHub and start sharing your experiences</p>
             
             <?php if (isset($success) && $success): ?>
                 <div class="alert alert-success">

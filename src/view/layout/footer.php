@@ -4,7 +4,7 @@
         <div class="footer-container">
             <div class="footer-grid">
                 <div class="footer-section">
-                    <h3>ReviewSite</h3>
+                    <h3>ReviewHub</h3>
                     <p>
                         Your trusted platform for discovering and reviewing companies. Share your experiences and help others make informed decisions.
                     </p>
@@ -58,7 +58,7 @@
                     </a>
                 </div>
                 <p class="footer-copyright">
-                    &copy; <?php echo date('Y'); ?> ReviewSite. All rights reserved.
+                    &copy; <?php echo date('Y'); ?> ReviewHub. All rights reserved.
                 </p>
             </div>
         </div>

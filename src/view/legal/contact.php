@@ -53,7 +53,7 @@
                 <h2>Other Ways to Reach Us</h2>
                 <div class="info-item">
                     <h3>Email</h3>
-                    <p>support@reviewsite.com</p>
+                    <p>support@reviewhub.com</p>
                 </div>
                 
                 <div class="info-item">

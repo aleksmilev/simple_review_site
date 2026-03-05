@@ -4,12 +4,12 @@
         
         <section>
             <h2>Our Mission</h2>
-            <p>ReviewSite was founded with a simple mission: to help people make informed decisions by providing a platform where honest reviews and experiences can be shared. We believe that transparency and community-driven insights lead to better choices for everyone.</p>
+            <p>ReviewHub was founded with a simple mission: to help people make informed decisions by providing a platform where honest reviews and experiences can be shared. We believe that transparency and community-driven insights lead to better choices for everyone.</p>
         </section>
 
         <section>
             <h2>What We Do</h2>
-            <p>ReviewSite is a comprehensive review platform that allows users to discover, review, and share experiences about companies across various industries. Whether you're looking for a service provider, evaluating a business, or sharing your own experience, ReviewSite provides the tools and community to make it happen.</p>
+            <p>ReviewHub is a comprehensive review platform that allows users to discover, review, and share experiences about companies across various industries. Whether you're looking for a service provider, evaluating a business, or sharing your own experience, ReviewHub provides the tools and community to make it happen.</p>
         </section>
 
         <section>
@@ -29,7 +29,7 @@
 
         <section>
             <h2>Join Our Community</h2>
-            <p>Whether you're a consumer looking for reliable businesses or someone who wants to share your experiences, ReviewSite welcomes you. <a href="/user/register">Create an account</a> to get started, or browse reviews as a guest.</p>
+            <p>Whether you're a consumer looking for reliable businesses or someone who wants to share your experiences, ReviewHub welcomes you. <a href="/user/register">Create an account</a> to get started, or browse reviews as a guest.</p>
         </section>
 
         <section>

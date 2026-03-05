@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Find and review companies. Share your experiences and discover trusted businesses.">
-    <title><?php echo isset($pageTitle) ? htmlspecialchars($pageTitle) . ' - ' : ''; ?>ReviewSite</title>
+    <title><?php echo isset($pageTitle) ? htmlspecialchars($pageTitle) . ' - ' : ''; ?>ReviewHub</title>
     <link rel="stylesheet" href="/assets/css/reset.css">
     <link rel="stylesheet" href="/assets/css/header.css">
     <link rel="stylesheet" href="/assets/css/footer.css">
@@ -23,7 +23,7 @@
             <div class="header-content">
                 <a href="/home" class="logo">
                     <div class="logo-icon">R</div>
-                    <span>ReviewSite</span>
+                    <span>ReviewHub</span>
                 </a>
                 
                 <nav class="nav">

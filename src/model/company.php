@@ -18,8 +18,9 @@ class CompanyModel extends Model
 
     public function search($query)
     {
-        $sql = "SELECT * FROM {$this->table} WHERE name LIKE :query OR description LIKE :query ORDER BY name ASC";
-        $stmt = $this->db->query($sql, ['query' => "%{$query}%"]);
+        $sql = "SELECT * FROM {$this->table} WHERE name LIKE :query1 OR description LIKE :query2 ORDER BY name ASC";
+        $searchTerm = "%{$query}%";
+        $stmt = $this->db->query($sql, ['query1' => $searchTerm, 'query2' => $searchTerm]);
         return $stmt->fetchAll();
     }
 }

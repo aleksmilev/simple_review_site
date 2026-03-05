@@ -33,12 +33,14 @@
                     </ul>
                 </nav>
                 
-                <div class="search-container">
-                    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
-                    <input type="search" class="search-input" placeholder="Search companies..." aria-label="Search companies">
-                </div>
+                <form method="POST" action="/review/search" class="search-container">
+                    <button type="submit" class="search-icon-button" aria-label="Search companies">
+                        <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                    <input type="search" name="query" class="search-input" placeholder="Search companies..." aria-label="Search companies">
+                </form>
                 
                 <div class="user-actions">
                     <?php if (isset($user) && $user): ?>

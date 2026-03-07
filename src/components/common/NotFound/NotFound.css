@@ -14,7 +14,6 @@
     z-index: 9999;
 }
 
-/* Hide header and footer when not-found component is present */
 .layout:has(.not-found-wrapper) .header,
 .layout:has(.not-found-wrapper) .footer {
     display: none;

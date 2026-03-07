@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { withRouter } from './withRouter'
+import { withRouter } from '../utils/withRouter'
 
 class ActiveComponent extends Component {
     constructor(props) {
@@ -87,7 +87,7 @@ class ActiveComponent extends Component {
         try {
             this.setState({ loading: true, error: null })
             
-            const module = await import(`../components/main/${directory}/${view}.jsx`)
+            const module = await import(`../components/pages/${directory}/${view}.jsx`)
             const Component = module.default
 
             this.setState({
@@ -99,7 +99,7 @@ class ActiveComponent extends Component {
             console.error(`Failed to load component: ${directory}/${view}`, error)
             
             try {
-                const NotFoundComponent = (await import('../components/global/not_found/index.jsx')).default
+                const NotFoundComponent = (await import('../components/common/NotFound/index.jsx')).default
                 this.setState({
                     Component: NotFoundComponent,
                     loading: false,
@@ -149,3 +149,4 @@ class ActiveComponent extends Component {
 }
 
 export default withRouter(ActiveComponent)
+

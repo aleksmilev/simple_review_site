@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { withRouter } from '../../helpers/withRouter'
+import { withRouter } from '../../utils/withRouter'
 import './header.css'
 
 class Header extends Component {
@@ -100,5 +100,4 @@ class Header extends Component {
     }
 }
 
-// Export with router HOC to get location and navigate
 export default withRouter(Header)

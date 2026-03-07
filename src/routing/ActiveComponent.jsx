@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { withRouter } from '../utils/withRouter'
+import { withRouter } from '../services/withRouter'
 
 class ActiveComponent extends Component {
     constructor(props) {

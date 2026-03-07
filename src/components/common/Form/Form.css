@@ -1,0 +1,91 @@
+.common-form {
+    width: 100%;
+}
+
+.form-loading {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: #f3f4f6;
+    border-radius: 0.5rem;
+    color: #6b7280;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.form-error {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    border-radius: 0.5rem;
+    color: #dc2626;
+    font-size: 0.9rem;
+}
+
+.form-success {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: #d1fae5;
+    border: 1px solid #a7f3d0;
+    border-radius: 0.5rem;
+    color: #065f46;
+    font-size: 0.9rem;
+}
+
+.common-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.common-form .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+    font-size: 0.95rem;
+}
+
+.common-form .form-group input,
+.common-form .form-group select,
+.common-form .form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.common-form .form-group input:focus,
+.common-form .form-group select:focus,
+.common-form .form-group textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.common-form .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.common-form .form-group input[type="checkbox"],
+.common-form .form-group input[type="radio"] {
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+.common-form .form-group .required {
+    color: #dc2626;
+    margin-left: 0.25rem;
+}
+
+.common-form button[type="submit"] {
+    margin-top: 1rem;
+}
+
+.common-form button[type="submit"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+

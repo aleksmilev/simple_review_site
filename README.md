@@ -167,13 +167,19 @@ The application uses a custom MVC architecture with the following components:
 
 ### Admin User
 - **Username**: `admin`
-- **Password**: `admin123`
+- **Password**: `password`
 - **Role**: Admin
 
 ### Regular User
 - **Username**: `john_doe`
-- **Password**: `password123`
+- **Password**: `password`
 - **Role**: User
+
+### Additional Test Users
+- **Username**: `admin_sarah` (Admin)
+- **Username**: `jane_smith` (User)
+- **Username**: `mike_jones` (User)
+- **Password for all users**: `password`
 
 > **Note**: These are test credentials from the seed data. Change them in production!
 

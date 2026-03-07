@@ -8,10 +8,16 @@ class RoutherApi extends Routher
 
     public function __construct()
     {
+        $this->setCorsHeaders();
         $this->loadApiHelpers();
 
         $endpoint = $_SERVER['REQUEST_URI'] ?? '/';
         $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+
+        if ($method == 'OPTIONS') {
+            http_response_code(200);
+            exit;
+        }
 
         $path = parse_url($endpoint, PHP_URL_PATH) ?? '/';
         $normalizedEndpoint = $this->handleApiEndpoint($endpoint);
@@ -21,6 +27,17 @@ class RoutherApi extends Routher
         $this->apiParams = $normalizedEndpoint['params'];
 
         $this->methodType = $method;
+    }
+
+    private function setCorsHeaders()
+    {
+        $origin = $_SERVER['HTTP_ORIGIN'] ?? '*';
+    
+        header('Access-Control-Allow-Origin: ' . $origin);
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+        header('Access-Control-Allow-Credentials: true');
+        header('Access-Control-Max-Age: 86400');
     }
 
     private function loadApiHelpers()

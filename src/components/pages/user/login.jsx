@@ -32,9 +32,7 @@ class Login extends Component {
                 const userResponse = await userRequest.exec()
                 
                 if (userResponse.status === 'OK' && userResponse.response) {
-                    console.log('User data from API:', userResponse.response)
                     UserService.setUser(userResponse.response)
-                    console.log('Decrypted user data:', UserService.getUser())
                 } else {
                     if (response.user) {
                         UserService.setUser(response.user)

@@ -39,7 +39,7 @@ class Form extends Component {
     handleSubmit = async (e) => {
         e.preventDefault()
         
-        const { config, onSuccess, onError, onSubmit } = this.props
+        const { config, onSuccess, onError, onSubmit, beforeSend } = this.props
         
         if (onSubmit) {
             const result = await onSubmit(e)
@@ -49,10 +49,15 @@ class Form extends Component {
         }
 
         const formData = new FormData(e.target)
-        const data = {}
+        let data = {}
         
         for (const [key, value] of formData.entries()) {
             data[key] = value
+        }
+
+        // Apply beforeSend transformation if provided
+        if (beforeSend) {
+            data = await beforeSend(data)
         }
 
         this.setState({ loading: true, error: null, success: false })
@@ -99,6 +104,7 @@ class Form extends Component {
         const { 
             children, 
             className = '', 
+            formClassName,
             showSuccessMessage = true,
             showErrorMessage = true,
             successMessage = 'Form submitted successfully!',
@@ -106,10 +112,12 @@ class Form extends Component {
         } = this.props
         const { loading, error, success } = this.state
 
+        const formClass = formClassName || 'common-form'
+
         return (
             <form 
                 ref={this.formRef}
-                className={`common-form ${className}`}
+                className={`${formClass} ${className}`.trim()}
                 onSubmit={this.handleSubmit}
             >
                 {children}

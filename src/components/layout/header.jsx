@@ -1,15 +1,25 @@
 import { Component } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { withRouter } from '../../services/withRouter'
+import UserService from '../../services/user'
 import './header.css'
 
 class Header extends Component {
     isAdmin = () => {
-        return false;
+        return UserService.isAdmin()
     }
 
     isLoggedIn = () => {
-        return false;
+        return UserService.isLoggedIn()
+    }
+
+    handleLogout = () => {
+        UserService.logout()
+        if (this.props.navigate) {
+            this.props.navigate('/home')
+        }
+        // Force re-render by updating state or triggering a refresh
+        window.location.reload()
     }
 
     handleSearchSubmit = (e) => {
@@ -83,9 +93,21 @@ class Header extends Component {
                                     </Link>
                                 </>
                             ) : (
-                                <Link to="/user/profile" className="user-avatar">
-                                    {isAdmin ? 'A' : 'U'}
-                                </Link>
+                                <>
+                                    <div className="user-menu">
+                                        <Link to="/user/profile" className="user-avatar" title={UserService.getUser()?.username || 'User'}>
+                                            {UserService.getUser()?.username ? UserService.getUser().username.charAt(0).toUpperCase() : 'U'}
+                                        </Link>
+                                    </div>
+                                    {isAdmin && (
+                                        <Link to="/admin" className="btn btn-outline">
+                                            <span className="btn-text">Admin</span>
+                                        </Link>
+                                    )}
+                                    <button onClick={this.handleLogout} className="btn btn-outline">
+                                        <span className="btn-text">Logout</span>
+                                    </button>
+                                </>
                             )}
                             <button className="mobile-menu-toggle" aria-label="Toggle menu">
                                 <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">

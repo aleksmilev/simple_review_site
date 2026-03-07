@@ -1,14 +1,20 @@
 import { Component } from 'react'
 import { Link } from 'react-router-dom'
+import UserService from '../../services/user'
 import './footer.css'
 
 class Footer extends Component {
     isLoggedIn = () => {
-        return false;
+        return UserService.isLoggedIn()
+    }
+
+    isAdmin = () => {
+        return UserService.isAdmin()
     }
 
     render() {
         const loggedIn = this.isLoggedIn();
+        const isAdmin = this.isAdmin();
 
         return (
             <footer className="footer">
@@ -32,7 +38,13 @@ class Footer extends Component {
                                         <li><Link to="/user/register" className="footer-link">Sign Up</Link></li>
                                     </>
                                 ) : (
-                                    <li><Link to="/user/profile" className="footer-link">Profile</Link></li>
+                                    <>
+                                        <li><Link to="/user/profile" className="footer-link">My Profile</Link></li>
+                                        <li><Link to="/user/reviews" className="footer-link">My Reviews</Link></li>
+                                        {isAdmin && (
+                                            <li><Link to="/admin" className="footer-link">Admin Panel</Link></li>
+                                        )}
+                                    </>
                                 )}
                             </ul>
                         </div>

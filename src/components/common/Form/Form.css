@@ -36,6 +36,10 @@
     margin-bottom: 1.5rem;
 }
 
+.auth-form .form-group {
+    margin-bottom: 0;
+}
+
 .common-form .form-group label {
     display: block;
     margin-bottom: 0.5rem;
@@ -44,9 +48,18 @@
     font-size: 0.95rem;
 }
 
+.auth-form .form-group label {
+    font-weight: 500;
+    color: #374151;
+    font-size: 0.95rem;
+}
+
 .common-form .form-group input,
 .common-form .form-group select,
-.common-form .form-group textarea {
+.common-form .form-group textarea,
+.auth-form .form-group input,
+.auth-form .form-group select,
+.auth-form .form-group textarea {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #d1d5db;
@@ -58,7 +71,10 @@
 
 .common-form .form-group input:focus,
 .common-form .form-group select:focus,
-.common-form .form-group textarea:focus {
+.common-form .form-group textarea:focus,
+.auth-form .form-group input:focus,
+.auth-form .form-group select:focus,
+.auth-form .form-group textarea:focus {
     outline: none;
     border-color: #3b82f6;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
@@ -75,7 +91,8 @@
     margin-right: 0.5rem;
 }
 
-.common-form .form-group .required {
+.common-form .form-group .required,
+.auth-form .form-group .required {
     color: #dc2626;
     margin-left: 0.25rem;
 }

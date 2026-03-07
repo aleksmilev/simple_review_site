@@ -1,3 +1,5 @@
+import TokenStorage from './token.js'
+
 class ApiConfig {
     static baseUrl = 'http://localhost:8080/api/'
 
@@ -20,7 +22,7 @@ class ApiConfig {
             'login': [
                 {
                     'method': 'POST',
-                    'params': ['email', 'password']
+                    'params': ['username', 'password']
                 }
             ],
             'register': [
@@ -87,6 +89,10 @@ class ApiRequest {
         this.config = config;
     }
 
+    getToken() {
+        return TokenStorage.getToken()
+    }
+
     handleError(error) {
         return {
             status: 'ERROR',
@@ -118,11 +124,18 @@ class ApiRequest {
         try {
             const validatedConfig = ApiConfig.buildConfig(this.config);
             
+            const headers = {
+                'Content-Type': 'application/json',
+            }
+
+            const token = this.getToken()
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`
+            }
+            
             const requestOptions = {
                 method: validatedConfig.method,
-                headers: {
-                    'Content-Type': 'application/json',
-                }
+                headers: headers
             };
 
             if (['POST', 'PUT', 'PATCH'].includes(validatedConfig.method)) {

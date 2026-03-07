@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import { Link } from 'react-router-dom'
 import './footer.css'
 
 class Footer extends Component {
@@ -27,11 +28,11 @@ class Footer extends Component {
                             <ul className="footer-links">
                                 {!loggedIn ? (
                                     <>
-                                        <li><a href="/user/login" className="footer-link">Login</a></li>
-                                        <li><a href="/user/register" className="footer-link">Sign Up</a></li>
+                                        <li><Link to="/user/login" className="footer-link">Login</Link></li>
+                                        <li><Link to="/user/register" className="footer-link">Sign Up</Link></li>
                                     </>
                                 ) : (
-                                    <li><a href="/user/profile" className="footer-link">Profile</a></li>
+                                    <li><Link to="/user/profile" className="footer-link">Profile</Link></li>
                                 )}
                             </ul>
                         </div>
@@ -39,10 +40,10 @@ class Footer extends Component {
                         <div className="footer-section">
                             <h4>Legal</h4>
                             <ul className="footer-links">
-                                <li><a href="/legal/privacy" className="footer-link">Privacy Policy</a></li>
-                                <li><a href="/legal/terms" className="footer-link">Terms of Service</a></li>
-                                <li><a href="/legal/about" className="footer-link">About Us</a></li>
-                                <li><a href="/legal/contact" className="footer-link">Contact</a></li>
+                                <li><Link to="/legal/privacy" className="footer-link">Privacy Policy</Link></li>
+                                <li><Link to="/legal/terms" className="footer-link">Terms of Service</Link></li>
+                                <li><Link to="/legal/about" className="footer-link">About Us</Link></li>
+                                <li><Link to="/legal/contact" className="footer-link">Contact</Link></li>
                             </ul>
                         </div>
                     </div>

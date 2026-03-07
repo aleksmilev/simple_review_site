@@ -1,4 +1,6 @@
 import { Component } from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import { withRouter } from '../../helpers/withRouter'
 import './header.css'
 
 class Header extends Component {
@@ -10,28 +12,58 @@ class Header extends Component {
         return false;
     }
 
+    handleSearchSubmit = (e) => {
+        e.preventDefault()
+        const query = e.target.query.value.trim()
+        if (query && this.props.navigate) {
+            this.props.navigate(`/review/search?query=${encodeURIComponent(query)}`)
+        }
+    }
+
     render() {
         const loggedIn = this.isLoggedIn();
         const isAdmin = this.isAdmin();
+        const location = this.props.location || { pathname: window.location.pathname }
 
         return (
             <header className="header">
                 <div className="header-container">
                     <div className="header-content">
-                        <a href="/home" className="logo">
+                        <Link to="/home" className="logo">
                             <div className="logo-icon">R</div>
                             <span>ReviewHub</span>
-                        </a>
+                        </Link>
                         
                         <nav className="nav">
                             <ul className="nav-links">
-                                <li><a href="/home" className="nav-link active">Home</a></li>
-                                <li><a href="/review/company" className="nav-link">Companies</a></li>
-                                <li><a href="/review" className="nav-link">Reviews</a></li>
+                                <li>
+                                    <NavLink 
+                                        to="/home" 
+                                        className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                                    >
+                                        Home
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink 
+                                        to="/review/company" 
+                                        className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                                    >
+                                        Companies
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink 
+                                        to="/review" 
+                                        className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                                    >
+                                        Reviews
+                                    </NavLink>
+                                </li>
                             </ul>
                         </nav>
                         
-                        <form method="POST" action="/review/search" className="search-container">
+                        <form onSubmit={this.handleSearchSubmit} className="search-container">
                             <button type="submit" className="search-icon-button" aria-label="Search companies">
                                 <svg className="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -43,17 +75,17 @@ class Header extends Component {
                         <div className="user-actions">
                             {!loggedIn ? (
                                 <>
-                                    <a href="/user/login" className="btn btn-outline">
+                                    <Link to="/user/login" className="btn btn-outline">
                                         <span className="btn-text">Login</span>
-                                    </a>
-                                    <a href="/user/register" className="btn btn-primary">
+                                    </Link>
+                                    <Link to="/user/register" className="btn btn-primary">
                                         <span className="btn-text">Sign Up</span>
-                                    </a>
+                                    </Link>
                                 </>
                             ) : (
-                                <a href="/user/profile" className="user-avatar">
+                                <Link to="/user/profile" className="user-avatar">
                                     {isAdmin ? 'A' : 'U'}
-                                </a>
+                                </Link>
                             )}
                             <button className="mobile-menu-toggle" aria-label="Toggle menu">
                                 <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,4 +100,5 @@ class Header extends Component {
     }
 }
 
-export default Header
+// Export with router HOC to get location and navigate
+export default withRouter(Header)

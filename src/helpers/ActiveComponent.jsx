@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import { withRouter } from './withRouter'
 
 class ActiveComponent extends Component {
     constructor(props) {
@@ -24,12 +25,18 @@ class ActiveComponent extends Component {
         if (this.props.path) {
             return this.props.path
         }
+        if (this.props.location) {
+            return this.props.location.pathname
+        }
         return window.location.pathname
     }
 
     getPathFromProps(props) {
         if (props && props.path) {
             return props.path
+        }
+        if (props && props.location) {
+            return props.location.pathname
         }
         return window.location.pathname
     }
@@ -114,7 +121,7 @@ class ActiveComponent extends Component {
         if (loading) {
             return (
                 <div className="container">
-                    <p>Loading...</p>
+                    <div className="loading-spinner"></div>
                 </div>
             )
         }
@@ -141,4 +148,4 @@ class ActiveComponent extends Component {
     }
 }
 
-export default ActiveComponent
+export default withRouter(ActiveComponent)

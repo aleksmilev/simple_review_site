@@ -1,5 +1,6 @@
 import TokenStorage from './token.js'
-import { encrypt, decrypt } from '../utils/encryption.js'
+import { encrypt, decrypt } from './encryption.js'
+import ApiRequest from './api.js'
 
 class UserService {
     static USER_KEY = 'reviewhub_user'
@@ -42,6 +43,27 @@ class UserService {
     static logout() {
         UserService.removeUser()
         TokenStorage.removeToken()
+    }
+
+    static async fetchAndUpdateUser() {
+        try {
+            const userRequest = new ApiRequest({
+                url: '/user/user',
+                method: 'GET',
+                params: {}
+            })
+            
+            const userResponse = await userRequest.exec()
+            
+            if (userResponse.status === 'OK' && userResponse.response) {
+                UserService.setUser(userResponse.response)
+                return userResponse.response
+            }
+            return null
+        } catch (error) {
+            console.error('Failed to fetch user data:', error)
+            return null
+        }
     }
 }
 

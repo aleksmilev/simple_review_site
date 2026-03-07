@@ -36,6 +36,18 @@ class ApiConfig {
                     'method': 'GET',
                     'params': []
                 }
+            ],
+            'changeEmail': [
+                {
+                    'method': 'POST',
+                    'params': ['email']
+                }
+            ],
+            'changePassword': [
+                {
+                    'method': 'POST',
+                    'params': ['old_password', 'new_password']
+                }
             ]
         }
     }

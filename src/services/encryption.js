@@ -1,4 +1,4 @@
-const SECRET_KEY = 'reviewhub_secret_key_2024'
+const SECRET_KEY = import.meta.env.VITE_ENCRYPTION_SECRET_KEY
 
 export function encrypt(data) {
     const dataStr = typeof data === 'string' ? data : JSON.stringify(data)

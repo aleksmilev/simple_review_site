@@ -35,13 +35,21 @@ class Profile extends Component {
         
         const user = UserService.getUser()
         if (user) {
-            this.setState({ user, loading: false })
+            this.setState({ 
+                user, 
+                reviewCount: user.reviewCount || user.review_count || 0,
+                loading: false 
+            })
         }
         
         const updatedUser = await UserService.fetchAndUpdateUser()
         if (updatedUser) {
             const decryptedUser = UserService.getUser()
-            this.setState({ user: decryptedUser, loading: false })
+            this.setState({ 
+                user: decryptedUser, 
+                reviewCount: decryptedUser.reviewCount || decryptedUser.review_count || 0,
+                loading: false 
+            })
         } else {
             this.setState({ loading: false })
         }
@@ -54,6 +62,7 @@ class Profile extends Component {
                 const updatedUser = UserService.getUser()
                 this.setState({
                     user: updatedUser,
+                    reviewCount: updatedUser.reviewCount || updatedUser.review_count || 0,
                     showPopup: true,
                     popupType: 'success',
                     popupMessage: responseData.message

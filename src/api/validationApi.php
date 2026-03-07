@@ -2,8 +2,17 @@
 
 class ValidationApi
 {
-    private static $encryptionKey = $_ENV['API_ENCRYPTION_KEY'];
-    private static $encryptionMethod = $_ENV['API_ENCRYPTION_METHOD'];
+    private static $encryptionMethod = 'AES-256-CBC';
+
+    private static function getEncryptionKey()
+    {
+        return $_ENV['API_ENCRYPTION_KEY'] ?? 'your-secret-key-change-this-in-production';
+    }
+
+    private static function getEncryptionMethod()
+    {
+        return $_ENV['API_ENCRYPTION_METHOD'] ?? self::$encryptionMethod;
+    }
 
     public static function validateAdminUser()
     {
@@ -22,16 +31,20 @@ class ValidationApi
 
     public static function encryptToken($data)
     {
-        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length(self::$encryptionMethod));
-        $encrypted = openssl_encrypt(json_encode($data), self::$encryptionMethod, self::$encryptionKey, 0, $iv);
+        $encryptionKey = self::getEncryptionKey();
+        $encryptionMethod = self::getEncryptionMethod();
+        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($encryptionMethod));
+        $encrypted = openssl_encrypt(json_encode($data), $encryptionMethod, $encryptionKey, 0, $iv);
         return base64_encode($encrypted . '::' . $iv);
     }
 
     public static function decryptToken($token)
     {
+        $encryptionKey = self::getEncryptionKey();
+        $encryptionMethod = self::getEncryptionMethod();
         $data = base64_decode($token);
         list($encrypted_data, $iv) = explode('::', $data, 2);
-        $decrypted = openssl_decrypt($encrypted_data, self::$encryptionMethod, self::$encryptionKey, 0, $iv);
+        $decrypted = openssl_decrypt($encrypted_data, $encryptionMethod, $encryptionKey, 0, $iv);
         return json_decode($decrypted, true);
     }
 

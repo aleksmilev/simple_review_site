@@ -10,4 +10,9 @@ class ControllerApi extends Controller
     {
         parent::__construct();
     }
+
+    public function getPostData()
+    {
+        return json_decode(file_get_contents('php://input'), true);
+    }
 }

@@ -2,16 +2,14 @@
 
 class RoutherApi extends Routher
 {
-    const API_CONTROLLERS = [
-        'legal' => 'LegalApi',
-    ];
-
     private $apiController = null;
     private $apiMethod = null;
     private $apiParams = [];
 
     public function __construct()
     {
+        $this->loadApiHelpers();
+
         $endpoint = $_SERVER['REQUEST_URI'] ?? '/';
         $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
@@ -23,8 +21,19 @@ class RoutherApi extends Routher
         $this->apiParams = $normalizedEndpoint['params'];
 
         $this->methodType = $method;
+    }
 
-        include_once(__DIR__ . '/validationApi.php');
+    private function loadApiHelpers()
+    {
+        $helperList = [
+            'validationApi' => __DIR__ . '/validationApi.php',
+            'controllerApi' => __DIR__ . '/controllerApi.php',
+            'responceApi' => __DIR__ . '/responceApi.php',
+        ];
+
+        foreach ($helperList as $helper) {
+            include_once($helper);
+        }
     }
 
     private function handleApiEndpoint($endpoint)
@@ -75,30 +84,50 @@ class RoutherApi extends Routher
     public function exec()
     {
         if ($this->apiController == null) {
-            $this->handle404();
+            ResponceApi::handle404();
         }
 
         $fileName = $this->normalizeApiControllerFilename($this->apiController);
         if (!file_exists($fileName)) {
-            $this->handle404();
+            ResponceApi::handle404();
         }
         require_once($fileName);
 
         $controllerName = $this->normalizeApiController($this->apiController);
         if (!class_exists($controllerName)) {
-            $this->handle404();
+            ResponceApi::handle404();
         }
 
         $classReference = new $controllerName();
         
         if ($this->apiMethod == null) {
-            $this->handle404();
+            ResponceApi::handle404();
         }
         
         $method = $this->apiMethod;
 
         if (!method_exists($classReference, $method)) {
-            $this->handle404();
+            ResponceApi::handle404();
+        }
+
+        if (property_exists($classReference, 'requestRules')) {
+            $requestRules = $classReference->requestRules;
+            if (isset($requestRules[$method])) {
+                $allowedMethods = $requestRules[$method];
+                if (!in_array($this->methodType, $allowedMethods)) {
+                    ResponceApi::handle405();
+                }
+            }
+        }
+
+        if (property_exists($classReference, 'adminMethods')) {
+            $adminMethods = $classReference->adminMethods;
+            if (in_array($method, $adminMethods)) {
+                $validationResult = ValidationApi::validateAdminUser();
+                if ($validationResult != true) {
+                    ResponceApi::handle401();
+                }
+            }
         }
 
         $reflection = new \ReflectionMethod($classReference, $method);
@@ -107,7 +136,7 @@ class RoutherApi extends Routher
         $given = count($this->apiParams);
 
         if ($given < $requiredParams || $given > $totalParams) {
-            $this->handle404();
+            ResponceApi::handle404();
         }
 
         return call_user_func_array([$classReference, $method], $this->apiParams);

@@ -6,7 +6,7 @@ class Routher
     private $method = null;
     private $params = [];
 
-    private $methodType = null;
+    protected $methodType = null;
 
     public function __construct()
     {

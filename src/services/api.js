@@ -48,6 +48,12 @@ class ApiConfig {
                     'method': 'POST',
                     'params': ['old_password', 'new_password']
                 }
+            ],
+            'reviews': [
+                {
+                    'method': 'GET',
+                    'params': []
+                }
             ]
         }
     }

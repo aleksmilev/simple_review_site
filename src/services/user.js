@@ -1,21 +1,24 @@
 import TokenStorage from './token.js'
+import { encrypt, decrypt } from '../utils/encryption.js'
 
 class UserService {
     static USER_KEY = 'reviewhub_user'
 
     static setUser(user) {
         if (user) {
-            localStorage.setItem(UserService.USER_KEY, JSON.stringify(user))
+            const encrypted = encrypt(user)
+            localStorage.setItem(UserService.USER_KEY, encrypted)
         } else {
             localStorage.removeItem(UserService.USER_KEY)
         }
     }
 
     static getUser() {
-        const userStr = localStorage.getItem(UserService.USER_KEY)
-        if (userStr) {
+        const encryptedUser = localStorage.getItem(UserService.USER_KEY)
+        if (encryptedUser) {
             try {
-                return JSON.parse(userStr)
+                const user = decrypt(encryptedUser)
+                return user.user
             } catch (e) {
                 return null
             }
@@ -33,7 +36,7 @@ class UserService {
 
     static isAdmin() {
         const user = UserService.getUser()
-        return user && user.role === 'admin'
+        return user && user.role == 'admin'
     }
 
     static logout() {

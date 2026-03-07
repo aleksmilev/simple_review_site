@@ -46,11 +46,9 @@ class Register extends Component {
         if (response.token) {
             TokenStorage.setToken(response.token)
             
-            // Store user info if provided in response
             if (response.user) {
                 UserService.setUser(response.user)
             } else if (response.username) {
-                // Fallback: create user object from response
                 UserService.setUser({
                     username: response.username,
                     role: response.role || 'user'

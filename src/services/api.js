@@ -30,6 +30,12 @@ class ApiConfig {
                     'method': 'POST',
                     'params': ['username', 'email', 'password']
                 }
+            ],
+            'user': [
+                {
+                    'method': 'GET',
+                    'params': []
+                }
             ]
         }
     }

@@ -4,6 +4,7 @@ import Form from '../../common/Form'
 import Popup from '../../common/Popup'
 import TokenStorage from '../../../services/token'
 import UserService from '../../../services/user'
+import ApiRequest from '../../../services/api'
 import { withRouter } from '../../../services/withRouter'
 import './auth.css'
 
@@ -17,19 +18,43 @@ class Login extends Component {
         }
     }
 
-    handleSuccess = (response, data) => {
+    handleSuccess = async (response, data) => {
         if (response.token) {
             TokenStorage.setToken(response.token)
             
-            // Store user info if provided in response
-            if (response.user) {
-                UserService.setUser(response.user)
-            } else if (response.username) {
-                // Fallback: create user object from response
-                UserService.setUser({
-                    username: response.username,
-                    role: response.role || 'user'
+            try {
+                const userRequest = new ApiRequest({
+                    url: '/user/user',
+                    method: 'GET',
+                    params: {}
                 })
+                
+                const userResponse = await userRequest.exec()
+                
+                if (userResponse.status === 'OK' && userResponse.response) {
+                    console.log('User data from API:', userResponse.response)
+                    UserService.setUser(userResponse.response)
+                    console.log('Decrypted user data:', UserService.getUser())
+                } else {
+                    if (response.user) {
+                        UserService.setUser(response.user)
+                    } else if (response.username) {
+                        UserService.setUser({
+                            username: response.username,
+                            role: response.role || 'user'
+                        })
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to fetch user data:', error)
+                if (response.user) {
+                    UserService.setUser(response.user)
+                } else if (response.username) {
+                    UserService.setUser({
+                        username: response.username,
+                        role: response.role || 'user'
+                    })
+                }
             }
             
             const message = response.message || 'Login successful! Redirecting...'

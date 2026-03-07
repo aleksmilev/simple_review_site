@@ -18,7 +18,6 @@ class Header extends Component {
         if (this.props.navigate) {
             this.props.navigate('/home')
         }
-        // Force re-render by updating state or triggering a refresh
         window.location.reload()
     }
 

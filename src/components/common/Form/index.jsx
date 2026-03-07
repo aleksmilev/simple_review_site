@@ -55,7 +55,6 @@ class Form extends Component {
             data[key] = value
         }
 
-        // Apply beforeSend transformation if provided
         if (beforeSend) {
             data = await beforeSend(data)
         }

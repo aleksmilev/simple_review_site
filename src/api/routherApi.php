@@ -65,20 +65,12 @@ class RoutherApi extends Routher
     private function normalizeApiControllerFilename($controller)
     {
         $fileName = strtolower($controller);
-        return __DIR__ . "/controller/" . $fileName . ".php";
+        return __DIR__ . "/controller/" . $fileName . "Api.php";
     }
 
     private function normalizeApiController($controller)
     {
         return ucfirst(strtolower($controller)) . "Api";
-    }
-
-    protected function handle404()
-    {
-        http_response_code(404);
-        header('Content-Type: application/json');
-        echo json_encode(['error' => '404 - API endpoint not found']);
-        exit;
     }
 
     public function exec()

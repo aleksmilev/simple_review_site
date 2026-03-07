@@ -11,6 +11,16 @@ class ResponceApi
         exit;
     }
 
+    public static function handle400()
+    {
+        $responseCode = 400;
+        $response = [
+            'error' => '400 - Invalid payload',
+        ];
+
+        self::returnData($response, $responseCode);
+    }
+
     public static function handle401()
     {
         $responseCode = 401;

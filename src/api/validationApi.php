@@ -48,8 +48,20 @@ class ValidationApi
         return json_decode($decrypted, true);
     }
 
-    private static function getToken()
+    public static function getToken()
     {
+        $headers = getallheaders();
+        if (isset($headers['Authorization'])) {
+            $authHeader = $headers['Authorization'];
+            if (preg_match('/Bearer\s+(.*)$/i', $authHeader, $matches)) {
+                return $matches[1];
+            }
+        }
+
+        if (isset($_GET['token'])) {
+            return $_GET['token'];
+        }
+
         return "";
     }
 }

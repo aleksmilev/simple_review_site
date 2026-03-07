@@ -11,7 +11,7 @@ class UserApi extends ControllerApi
     {
         $data = $this->getPostData();
 
-        $requiredFields = ['email', 'password'];
+        $requiredFields = ['username', 'password'];
         foreach ($requiredFields as $field) {
             if (empty($data[$field])) {
                 ResponceApi::handle400();
@@ -19,7 +19,7 @@ class UserApi extends ControllerApi
         }
 
         $this->load->model('UserModel');
-        $user = $this->model->UserModel->findByEmail($data['email']);
+        $user = $this->model->UserModel->findByUsername($data['username']);
 
         if (!$user || !password_verify($data['password'], $user['password_hash'])) {
             ResponceApi::handle401();

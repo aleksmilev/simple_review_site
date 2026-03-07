@@ -19,6 +19,11 @@ class Routher
         }
 
         $normalizedEndpoint = $this->handleEndpoint($endpoint);
+        
+        if ($normalizedEndpoint == null) {
+            return;
+        }
+        
         $this->controller = $normalizedEndpoint['controller']; 
         $this->method = $normalizedEndpoint['method']; 
         $this->params = $normalizedEndpoint['params'];
@@ -33,6 +38,11 @@ class Routher
 
         $segments = $path == "" ? [] : explode("/", $path);
 
+        if (isset($segments[0]) && $segments[0] == "api") {
+            $this->handleApi();
+            return null;
+        }
+
         $controller = isset($segments[0]) && $segments[0] != "" ? strtolower($segments[0]) : "home";
         $method = isset($segments[1]) && $segments[1] != "" ? $segments[1] : "index";
         $params = array_slice($segments, 2);
@@ -42,6 +52,14 @@ class Routher
             'method' => $method,
             'params' => $params, 
         ];
+    }
+
+    protected function handleApi()
+    {
+        require_once(__DIR__ . '/../api/routherApi.php');
+        $apiRouter = new RoutherApi();
+        $apiRouter->exec();
+        exit;
     }
 
     private function normalizeControllerFilename($controller)
@@ -55,7 +73,7 @@ class Routher
         return ucfirst(strtolower($controller));
     }
 
-    private function handle404()
+    protected function handle404()
     {
         http_response_code(404);
 

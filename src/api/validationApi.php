@@ -1,0 +1,6 @@
+<?php
+
+static class ValidationApi
+{
+    
+}

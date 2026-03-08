@@ -5,6 +5,7 @@ class ReviewApi extends ControllerApi
     public $requestRules = [
         'getCompany' => ["POST"],
         'listCompany' => ["GET"],
+        'postReview' => ["POST"],
     ];
 
     public $adminMethods = [
@@ -68,5 +69,51 @@ class ReviewApi extends ControllerApi
         }
         
         ResponceApi::returnData(['companies' => $companies]);
+    }
+
+    public function postReview()
+    {
+        $data = $this->getPostData();
+        
+        $requiredFields = ['company_id', 'rating', 'title', 'content'];
+        $this->validateFields($requiredFields, $data);
+        
+        $this->load->model('ReviewModel');
+        $this->load->model('CompanyModel');
+        
+        $company = $this->model->CompanyModel->get($data['company_id']);
+        if (!$company) {
+            ResponceApi::returnData(['error' => 'Company not found'], 404);
+        }
+        
+        $rating = intval($data['rating']);
+        if ($rating < 1 || $rating > 5) {
+            ResponceApi::returnData(['error' => 'Rating must be between 1 and 5'], 400);
+        }
+        
+        $userId = null;
+        $token = ValidationApi::getToken();
+        if (!empty($token)) {
+            $tokenData = ValidationApi::decryptToken($token);
+            if ($tokenData && isset($tokenData['id'])) {
+                $userId = $tokenData['id'];
+            }
+        }
+        
+        try {
+            $reviewData = [
+                'company_id' => $data['company_id'],
+                'user_id' => $userId,
+                'rating' => $rating,
+                'title' => trim($data['title']),
+                'content' => trim($data['content'])
+            ];
+            
+            $this->model->ReviewModel->add($reviewData);
+            
+            ResponceApi::returnData(['message' => 'Review posted successfully'], 201);
+        } catch (Exception $e) {
+            ResponceApi::returnData(['error' => 'Failed to post review'], 400);
+        }
     }
 }

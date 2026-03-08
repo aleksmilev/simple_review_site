@@ -143,6 +143,56 @@ class Admin extends Component {
         )
     }
 
+    renderStatsGrid = (totalCompanies, totalReviews, totalUsers, totalTags) => {
+        return (
+            <div className="admin-stats-grid">
+                {this.renderStatCard('🏢', totalCompanies, 'Companies', '/admin/companies')}
+                {this.renderStatCard('📝', totalReviews, 'Reviews', '/admin/reviews')}
+                {this.renderStatCard('👥', totalUsers, 'Users', '/admin/users')}
+                {this.renderStatCard('🏷️', totalTags, 'Tags', '/admin/tags')}
+            </div>
+        )
+    }
+
+    renderQuickActions = () => {
+        return (
+            <div className="admin-quick-actions">
+                <h2>Quick Actions</h2>
+                <div className="quick-actions-grid">
+                    <Link to="/admin/company/create" className="quick-action-card">
+                        <div className="quick-action-icon">➕</div>
+                        <div className="quick-action-label">Create Company</div>
+                    </Link>
+                    <Link to="/admin/tag/create" className="quick-action-card">
+                        <div className="quick-action-icon">🏷️</div>
+                        <div className="quick-action-label">Create Tag</div>
+                    </Link>
+                </div>
+            </div>
+        )
+    }
+
+    renderFeedbackSection = (recentFeedback) => {
+        return (
+            <div className="admin-section">
+                <div className="admin-section-header">
+                    <h2>Recent Feedback</h2>
+                    <Link to="/admin/feedback" className="btn btn-outline">View All</Link>
+                </div>
+                
+                {recentFeedback.length === 0 ? (
+                    <div className="empty-state">
+                        <p>No feedback yet.</p>
+                    </div>
+                ) : (
+                    <div className="feedback-list">
+                        {recentFeedback.map((item) => this.renderFeedbackItem(item))}
+                    </div>
+                )}
+            </div>
+        )
+    }
+
     render() {
         const { totalCompanies, totalReviews, totalUsers, totalTags, recentFeedback, loading } = this.state
 
@@ -160,44 +210,9 @@ class Admin extends Component {
             <div className="container">
                 <div className="admin-page">
                     <h1>Admin Dashboard</h1>
-                    
-                    <div className="admin-stats-grid">
-                        {this.renderStatCard('🏢', totalCompanies, 'Companies', '/admin/companies')}
-                        {this.renderStatCard('📝', totalReviews, 'Reviews', '/admin/reviews')}
-                        {this.renderStatCard('👥', totalUsers, 'Users', '/admin/users')}
-                        {this.renderStatCard('🏷️', totalTags, 'Tags', '/admin/tags')}
-                    </div>
-                    
-                    <div className="admin-quick-actions">
-                        <h2>Quick Actions</h2>
-                        <div className="quick-actions-grid">
-                            <Link to="/admin/company/create" className="quick-action-card">
-                                <div className="quick-action-icon">➕</div>
-                                <div className="quick-action-label">Create Company</div>
-                            </Link>
-                            <Link to="/admin/tag/create" className="quick-action-card">
-                                <div className="quick-action-icon">🏷️</div>
-                                <div className="quick-action-label">Create Tag</div>
-                            </Link>
-                        </div>
-                    </div>
-                    
-                    <div className="admin-section">
-                        <div className="admin-section-header">
-                            <h2>Recent Feedback</h2>
-                            <Link to="/admin/feedback" className="btn btn-outline">View All</Link>
-                        </div>
-                        
-                        {recentFeedback.length === 0 ? (
-                            <div className="empty-state">
-                                <p>No feedback yet.</p>
-                            </div>
-                        ) : (
-                            <div className="feedback-list">
-                                {recentFeedback.map((item) => this.renderFeedbackItem(item))}
-                            </div>
-                        )}
-                    </div>
+                    {this.renderStatsGrid(totalCompanies, totalReviews, totalUsers, totalTags)}
+                    {this.renderQuickActions()}
+                    {this.renderFeedbackSection(recentFeedback)}
                 </div>
             </div>
         )

@@ -10,5 +10,5 @@ class Tag extends Component {
     }
 }
 
-export default withRouter(Admin);
+export default withRouter(Tag);
 

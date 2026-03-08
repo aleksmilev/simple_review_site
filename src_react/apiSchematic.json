@@ -1,0 +1,153 @@
+{
+  "legal": {
+    "form": [
+      {
+        "method": "POST",
+        "params": ["name", "email", "subject", "message"]
+      }
+    ],
+    "list": [
+      {
+        "method": "GET",
+        "params": []
+      }
+    ]
+  },
+  "user": {
+    "login": [
+      {
+        "method": "POST",
+        "params": ["username", "password"]
+      }
+    ],
+    "register": [
+      {
+        "method": "POST",
+        "params": ["username", "email", "password"]
+      }
+    ],
+    "user": [
+      {
+        "method": "GET",
+        "params": []
+      }
+    ],
+    "changeEmail": [
+      {
+        "method": "POST",
+        "params": ["email"]
+      }
+    ],
+    "changePassword": [
+      {
+        "method": "POST",
+        "params": ["old_password", "new_password"]
+      }
+    ],
+    "reviews": [
+      {
+        "method": "GET",
+        "params": []
+      }
+    ],
+    "getAllUsers": [
+      {
+        "method": "GET",
+        "params": []
+      }
+    ],
+    "changeUserRole": [
+      {
+        "method": "POST",
+        "params": ["id", "role"]
+      }
+    ],
+    "deleteUser": [
+      {
+        "method": "POST",
+        "params": ["id"]
+      }
+    ]
+  },
+  "review": {
+    "listCompany": [
+      {
+        "method": "GET",
+        "params": []
+      }
+    ],
+    "getCompany": [
+      {
+        "method": "POST",
+        "params": ["id"]
+      }
+    ],
+    "getReview": [
+      {
+        "method": "GET",
+        "params": []
+      }
+    ],
+    "getTags": [
+      {
+        "method": "GET",
+        "params": []
+      }
+    ],
+    "searchByCompany": [
+      {
+        "method": "POST",
+        "params": ["query"]
+      }
+    ],
+    "searchByTag": [
+      {
+        "method": "POST",
+        "params": ["tag_id"]
+      }
+    ],
+    "deleteReview": [
+      {
+        "method": "POST",
+        "params": ["id"]
+      }
+    ],
+    "deleteCompany": [
+      {
+        "method": "POST",
+        "params": ["id"]
+      }
+    ],
+    "createCompany": [
+      {
+        "method": "POST",
+        "params": ["name"]
+      }
+    ],
+    "updateCompany": [
+      {
+        "method": "POST",
+        "params": ["id", "name"]
+      }
+    ],
+    "deleteTag": [
+      {
+        "method": "POST",
+        "params": ["id"]
+      }
+    ],
+    "createTag": [
+      {
+        "method": "POST",
+        "params": ["name"]
+      }
+    ],
+    "updateTag": [
+      {
+        "method": "POST",
+        "params": ["id", "name"]
+      }
+    ]
+  }
+}
+

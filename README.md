@@ -1,25 +1,27 @@
 # ReviewHub - Company Review Platform
 
-A comprehensive PHP-based web application for reviewing companies, built with a custom MVC architecture. Users can browse companies, leave reviews, search by tags, and administrators can manage all content through a dedicated admin panel.
+A full-stack web application for reviewing companies, featuring a PHP backend with a custom MVC architecture and a modern React frontend. Users can browse companies, leave reviews, search by tags, and administrators can manage all content through dedicated admin panels. The platform supports both traditional server-rendered pages and a modern single-page application (SPA) interface.
 
 ## Features
 
 ### User Features
-- **Company Browsing**: View all companies with ratings and reviews
-- **Company Search**: Search companies by name or description
+- **Company Browsing**: View all companies with ratings and reviews in responsive layouts
+- **Company Search**: Search companies by name or description with real-time results
 - **Tag Filtering**: Filter companies by tags with color-coded badges
 - **Review System**: Leave reviews with ratings (1-5 stars), titles, and detailed feedback
-- **User Authentication**: Register, login, and manage your profile
+- **User Authentication**: Register, login, and manage your profile with secure token-based authentication
 - **User Profiles**: View your own reviews and manage account settings
 - **Anonymous Reviews**: Option to leave reviews without an account
+- **Dynamic Page Titles**: Automatic page title updates (React frontend)
 
 ### Admin Features
 - **Dashboard**: Overview with statistics and recent feedback
 - **Company Management**: Create, edit, and delete companies with tag assignment
-- **User Management**: Manage users, change roles, delete accounts
+- **User Management**: Manage users, change roles, delete accounts (with self-protection in React)
 - **Review Management**: View and moderate all reviews
-- **Tag Management**: Create and manage tags with custom colors
+- **Tag Management**: Create and manage tags with custom colors and descriptions
 - **Feedback Viewing**: View all contact form submissions
+- **Route Protection**: Automatic redirect to login for unauthorized admin access (React)
 
 ### API Features
 - **RESTful API**: Complete API for all platform features
@@ -30,8 +32,17 @@ A comprehensive PHP-based web application for reviewing companies, built with a 
 - **User Management**: User operations including admin functions
 - **CORS Support**: Cross-origin requests supported for frontend integration
 
+### Technical Features
+- **Single Page Application**: Fast navigation without page reloads (React frontend)
+- **Dynamic Routing**: URL-based component loading with React Router
+- **API Integration**: RESTful API communication with token-based authentication
+- **Responsive Design**: Mobile-friendly interface with modern CSS
+- **Component-Based Architecture**: Reusable React components
+- **State Management**: Component-level state management with React hooks and class components
+
 ## Tech Stack
 
+### Backend
 - **Backend**: PHP 8.x
 - **Database**: MySQL 8.0
 - **Web Server**: Apache with mod_rewrite
@@ -40,11 +51,18 @@ A comprehensive PHP-based web application for reviewing companies, built with a 
 - **Architecture**: Custom MVC pattern with Load class for dependency management
 - **API**: RESTful API with token-based authentication and CORS support
 
+### Frontend
+- **Frontend Framework**: React 19.2.0
+- **Build Tool**: Vite 7.3.1
+- **Routing**: React Router DOM 7.13.1
+- **Styling**: CSS Modules (organized in `src_react/style/`)
+- **Development**: ESLint, Hot Module Replacement (HMR)
+
 ## Project Structure
 
 ```
-php/
-├── src_php/
+ReviewHub/
+├── src_php/              # PHP Backend (MVC Architecture)
 │   ├── assets/
 │   │   ├── css/          # Stylesheets (modular CSS files)
 │   │   │   ├── admin.css
@@ -90,19 +108,71 @@ php/
 │   ├── .htaccess        # URL rewriting rules
 │   ├── Dockerfile       # PHP/Apache container config
 │   └── index.php        # Application entry point
+├── src_react/           # React Frontend (SPA)
+│   ├── assets/         # React assets
+│   │   └── react.svg
+│   ├── components/     # React components
+│   │   ├── common/     # Reusable components
+│   │   │   ├── Form/   # Form component
+│   │   │   ├── NotFound/ # 404 page component
+│   │   │   └── Popup/  # Popup/modal component
+│   │   ├── layout/     # Layout components
+│   │   │   ├── header.jsx    # Site header with navigation
+│   │   │   ├── footer.jsx    # Site footer
+│   │   │   └── Layout.jsx    # Main layout wrapper
+│   │   └── pages/      # Page components
+│   │       ├── admin/  # Admin panel pages
+│   │       ├── home/   # Homepage
+│   │       ├── legal/  # Legal pages
+│   │       ├── review/ # Review-related pages
+│   │       └── user/   # User-related pages
+│   ├── routing/        # Routing logic
+│   │   └── ActiveComponent.jsx  # Dynamic component loader
+│   ├── services/       # Service modules
+│   │   ├── api.js              # API request handler
+│   │   ├── user.js             # User authentication service
+│   │   ├── token.js            # Token management
+│   │   ├── encryption.js       # Encryption utilities
+│   │   └── withRouter.jsx      # Router HOC
+│   ├── style/          # Stylesheets
+│   │   ├── admin.css      # Admin panel styles
+│   │   ├── auth.css       # Authentication pages
+│   │   ├── company.css    # Company pages
+│   │   ├── contact.css    # Contact form
+│   │   ├── footer.css     # Footer styles
+│   │   ├── Form.css       # Form components
+│   │   ├── header.css     # Header styles
+│   │   ├── home.css       # Homepage styles
+│   │   ├── layout.css     # Layout styles
+│   │   ├── legal.css      # Legal pages
+│   │   ├── NotFound.css   # 404 page
+│   │   ├── Popup.css      # Popup/modal
+│   │   ├── profile.css    # User profile
+│   │   └── reviews.css    # Review pages
+│   ├── apiSchematic.json # API endpoint definitions
+│   ├── App.jsx          # Root component
+│   ├── main.jsx         # Application entry point
+│   └── index.css        # Global styles
 ├── database/
 │   ├── schematic.sql    # Database schema (DDL)
 │   └── seed.sql         # Test data (DML)
+├── public/              # Static assets (React)
+│   └── vite.svg
 ├── docker-compose.yml   # Docker services configuration
+├── index.html           # HTML template (React)
+├── package.json         # Dependencies and scripts (React)
+├── vite.config.js       # Vite configuration
 ├── .env                 # Environment variables
 └── README.md            # This file
 ```
 
 ## Architecture
 
-### Custom MVC Pattern
+### Backend Architecture (PHP)
 
-The application uses a custom MVC architecture with the following components:
+#### Custom MVC Pattern
+
+The PHP backend uses a custom MVC architecture with the following components:
 
 - **Router** (`helper/routher.php`): Handles URL routing and dispatches requests to controllers
 - **Controller** (`helper/controller.php`): Base controller with common functionality
@@ -111,7 +181,7 @@ The application uses a custom MVC architecture with the following components:
 - **Database** (`helper/database.php`): PDO-based database abstraction layer
 - **Layout** (`helper/layout.php`): Handles view rendering with header/footer
 
-### Key Design Patterns
+#### Key Design Patterns
 
 1. **Load Class**: Centralized dependency management
    - Automatically references controller's `$data` array
@@ -128,19 +198,53 @@ The application uses a custom MVC architecture with the following components:
    - Models handle data access
    - Views handle presentation
 
+### Frontend Architecture (React)
+
+#### Component-Based Architecture
+
+The React frontend uses class components and functional components organized by feature:
+
+- **Layout Components**: Header, Footer, and main Layout wrapper
+- **Page Components**: Route-specific components in `pages/` directory
+- **Common Components**: Reusable components (Form, NotFound, Popup)
+- **Service Layer**: API communication, authentication, and utilities
+
+#### Routing System
+
+The application uses a custom dynamic routing system:
+
+- **ActiveComponent**: Dynamically loads components based on URL path
+- **Path Parsing**: Converts URLs to `directory/view` format
+- **Route Protection**: Admin routes automatically redirect non-admin users
+- **Dynamic Titles**: Page titles update automatically based on route
+
+#### API Integration
+
+- **ApiRequest Service**: Centralized API communication handler
+- **Token Management**: Automatic token inclusion in authenticated requests
+- **Error Handling**: Consistent error handling across API calls
+- **API Schema**: Endpoint definitions in `apiSchematic.json`
+
+#### State Management
+
+- **Component State**: Uses React `this.state` and `setState` for class components
+- **Local Storage**: User authentication tokens and user data
+- **Service Layer**: UserService for authentication state management
+
 ## Installation
 
 ### Prerequisites
 
 - Docker and Docker Compose installed
+- Node.js 18+ and npm (for React frontend)
 - Git (for cloning the repository)
 
 ### Setup Steps
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/aleksmilev/simple_review_site.git
-   cd simple_review_site
+   git clone <repository-url>
+   cd ReviewHub
    ```
 
 2. **Configure environment variables**
@@ -153,9 +257,9 @@ The application uses a custom MVC architecture with the following components:
    MYSQL_PASSWORD=secret
    ```
 
-3. **Start Docker containers**
+3. **Start Docker containers (Backend)**
    ```bash
-   docker-compose up -d
+   docker-compose up -d --build
    ```
 
 4. **Initialize the database**
@@ -174,10 +278,69 @@ The application uses a custom MVC architecture with the following components:
    # Navigate to http://localhost:8081 and import the SQL files
    ```
 
-5. **Access the application**
+5. **Install React dependencies**
+   ```bash
+   npm install
+   ```
+
+6. **Configure API endpoint (React)**
    
-   - Main Application: http://localhost:8080
+   Update the API base URL in `src_react/services/api.js` if your backend is not running on `http://localhost:8080`:
+   ```javascript
+   const baseUrl = 'http://localhost:8080/api'
+   ```
+
+7. **Start the React development server**
+   ```bash
+   npm run dev
+   ```
+
+8. **Access the application**
+   
+   - PHP Backend (Server-rendered): http://localhost:8080
+   - React Frontend (SPA): http://localhost:5173 (or URL shown in terminal)
    - Adminer (Database UI): http://localhost:8081
+
+### Quick Setup Script
+
+You can use the provided setup script:
+```bash
+./set_up.sh
+```
+
+This script will:
+- Start Docker containers
+- Install npm dependencies (if not already installed)
+- Start the React development server
+
+### Build for Production
+
+#### React Frontend
+```bash
+npm run build
+```
+
+The production build will be in the `dist/` directory. Serve it with any static file server:
+```bash
+npm run preview
+```
+
+## Configuration
+
+### API Configuration
+
+The API endpoint configuration is in `src_react/services/api.js`. Update the `baseUrl` constant to point to your backend:
+
+```javascript
+const baseUrl = 'http://your-api-domain.com/api'
+```
+
+### API Schema
+
+API endpoint definitions are stored in `src_react/apiSchematic.json`. This file defines:
+- Available endpoints
+- Required HTTP methods
+- Required parameters for each endpoint
 
 ## Default Credentials
 
@@ -226,6 +389,7 @@ The application uses a custom MVC architecture with the following components:
 - `/review/company` - All companies
 - `/review/company/{id}` - Single company with reviews
 - `/review/search` - Search companies
+- `/review/search?query={query}` - Search by query
 - `/review/search?tag={id}` - Filter by tag
 - `/user/login` - Login page
 - `/user/register` - Registration page
@@ -241,6 +405,10 @@ The application uses a custom MVC architecture with the following components:
 - `/admin/tag/create` - Create tag
 - `/admin/tag/edit/{id}` - Edit tag
 - `/admin/feedback` - View feedback
+- `/legal/terms` - Terms of Service
+- `/legal/privacy` - Privacy Policy
+- `/legal/about` - About page
+- `/legal/contact` - Contact page
 
 ## API Documentation
 
@@ -435,9 +603,80 @@ The application uses the following main tables:
 
 See `database/schematic.sql` for the complete schema.
 
+## Development
+
+### Available Scripts (React)
+
+- `npm run dev` - Start development server with HMR
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+### Code Organization
+
+#### Backend (PHP)
+- **Controllers**: Business logic in `src_php/controller/`
+- **Models**: Data access in `src_php/model/`
+- **Views**: Presentation templates in `src_php/view/`
+- **API**: API controllers in `src_php/api/controller/`
+
+#### Frontend (React)
+- **Components**: Organized by feature in `src_react/components/pages/`
+- **Services**: Business logic and API calls in `src_react/services/`
+- **Styles**: Modular CSS files in `src_react/style/`
+- **Routing**: Dynamic routing in `src_react/routing/ActiveComponent.jsx`
+
+### Adding New Pages (React)
+
+1. Create component in appropriate `src_react/components/pages/{directory}/{view}.jsx`
+2. Component will be automatically loaded based on URL path
+3. Add styles to appropriate CSS file in `src_react/style/`
+4. Update `ActiveComponent.jsx` title mapping if needed
+
+### Styling (React)
+
+- CSS files are organized by feature in `src_react/style/`
+- Import styles in component files: `import '../../style/feature.css'`
+- Follow existing naming conventions (BEM-like classes)
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## Dependencies
+
+### Production Dependencies (React)
+- `react` ^19.2.0 - React library
+- `react-dom` ^19.2.0 - React DOM rendering
+- `react-router-dom` ^7.13.1 - Client-side routing
+
+### Development Dependencies (React)
+- `vite` ^7.3.1 - Build tool and dev server
+- `@vitejs/plugin-react` ^5.1.1 - Vite React plugin
+- `eslint` ^9.39.1 - Code linting
+- `@types/react` ^19.2.7 - TypeScript types for React
+
+## Contributing
+
+1. Follow existing code style and component structure
+2. Use class components for complex state management (React)
+3. Keep components focused and reusable
+4. Add appropriate error handling
+5. Update API schema if adding new endpoints
+
+## License
+
+This project is part of the ReviewHub platform.
+
 ## Acknowledgments
 
-- Built with PHP and MySQL
+- Built with PHP and MySQL for the backend
+- Uses React and Vite for the frontend
 - Uses Docker for containerization
 - Custom MVC architecture for flexibility and learning
+- React Router for client-side routing
+- Modern CSS for responsive design
 

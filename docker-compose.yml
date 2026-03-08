@@ -3,12 +3,12 @@ version: '3.8'
 services:
 
   php:
-    build: ./php_src
+    build: ./src_php
     container_name: php_app
     ports:
       - "8080:80"
     volumes:
-      - ./php_src:/var/www/html
+      - ./src_php:/var/www/html
     depends_on:
       - mysql
 

@@ -49,6 +49,24 @@
         "method": "GET",
         "params": []
       }
+    ],
+    "getAllUsers": [
+      {
+        "method": "GET",
+        "params": []
+      }
+    ],
+    "changeUserRole": [
+      {
+        "method": "POST",
+        "params": ["id", "role"]
+      }
+    ],
+    "deleteUser": [
+      {
+        "method": "POST",
+        "params": ["id"]
+      }
     ]
   },
   "review": {

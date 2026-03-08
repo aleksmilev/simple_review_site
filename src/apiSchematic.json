@@ -69,6 +69,24 @@
         "method": "GET",
         "params": []
       }
+    ],
+    "getTags": [
+      {
+        "method": "GET",
+        "params": []
+      }
+    ],
+    "searchByCompany": [
+      {
+        "method": "POST",
+        "params": ["query"]
+      }
+    ],
+    "searchByTag": [
+      {
+        "method": "POST",
+        "params": ["tag_id"]
+      }
     ]
   }
 }

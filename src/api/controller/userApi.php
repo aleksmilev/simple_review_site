@@ -55,8 +55,15 @@ class UserApi extends ControllerApi
             ResponceApi::handle401();
         }
 
+        $this->load->model('ReviewModel');
+        $userReviews = $this->model->ReviewModel->getByUser($user['id']);
+        $reviewCount = count($userReviews);
+
         unset($user['password_hash']);
-        ResponceApi::returnData(['user' => $user]);
+        ResponceApi::returnData([
+            'user' => $user,
+            'reviewCount' => $reviewCount
+        ]);
     }
 
     public function changePassword()

@@ -105,6 +105,24 @@
         "method": "POST",
         "params": ["tag_id"]
       }
+    ],
+    "deleteReview": [
+      {
+        "method": "POST",
+        "params": ["id"]
+      }
+    ],
+    "deleteCompany": [
+      {
+        "method": "POST",
+        "params": ["id"]
+      }
+    ],
+    "deleteTag": [
+      {
+        "method": "POST",
+        "params": ["id"]
+      }
     ]
   }
 }

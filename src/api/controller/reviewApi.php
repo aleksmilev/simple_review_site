@@ -10,10 +10,23 @@ class ReviewApi extends ControllerApi
         'getTags' => ["GET"],
         'searchByCompany' => ["POST"],
         'searchByTag' => ["POST"],
+        'deleteReview' => ["POST"],
+        'createCompany' => ["POST"],
+        'updateCompany' => ["POST"],
+        'deleteCompany' => ["POST"],
+        'createTag' => ["POST"],
+        'updateTag' => ["POST"],
+        'deleteTag' => ["POST"],
     ];
 
     public $adminMethods = [
-
+        'deleteReview',
+        'createCompany',
+        'updateCompany',
+        'deleteCompany',
+        'createTag',
+        'updateTag',
+        'deleteTag',
     ];
 
     public function __construct()
@@ -214,5 +227,276 @@ class ReviewApi extends ControllerApi
         }
         
         ResponceApi::returnData(['companies' => $companies, 'tag_id' => $tagId]);
+    }
+
+    public function deleteReview()
+    {
+        $data = $this->getPostData();
+        
+        $requiredFields = ['id'];
+        $this->validateFields($requiredFields, $data);
+        
+        $this->load->model('ReviewModel');
+        $review = $this->model->ReviewModel->get($data['id']);
+        
+        if (!$review) {
+            ResponceApi::returnData(['error' => 'Review not found'], 404);
+        }
+        
+        try {
+            $this->model->ReviewModel->delete($data['id']);
+            ResponceApi::returnData(['message' => 'Review deleted successfully']);
+        } catch (Exception $e) {
+            ResponceApi::returnData(['error' => 'Failed to delete review'], 400);
+        }
+    }
+
+    public function createCompany()
+    {
+        $data = $this->getPostData();
+        
+        $requiredFields = ['name'];
+        $this->validateFields($requiredFields, $data);
+        
+        $this->load->model('CompanyModel');
+        $this->load->model('CompanyTagModel');
+        
+        $name = trim($data['name']);
+        $description = trim($data['description'] ?? '');
+        $website = trim($data['website'] ?? '');
+        $slug = trim($data['slug'] ?? '');
+        $tagIds = $data['tags'] ?? [];
+        
+        if (empty($name)) {
+            ResponceApi::returnData(['error' => 'Company name is required'], 400);
+        }
+        
+        if (empty($slug)) {
+            $slug = strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $name));
+            $slug = trim($slug, '-');
+        }
+        
+        $existing = $this->model->CompanyModel->findBySlug($slug);
+        if ($existing) {
+            ResponceApi::returnData(['error' => 'A company with this slug already exists'], 400);
+        }
+        
+        $token = ValidationApi::getToken();
+        $tokenData = ValidationApi::decryptToken($token);
+        $createdBy = $tokenData['id'] ?? null;
+        
+        try {
+            $companyData = [
+                'name' => $name,
+                'description' => $description,
+                'slug' => $slug,
+                'website' => $website,
+                'created_by' => $createdBy
+            ];
+            
+            $this->model->CompanyModel->add($companyData);
+            $company = $this->model->CompanyModel->findBySlug($slug);
+            
+            if ($company && !empty($tagIds)) {
+                foreach ($tagIds as $tagId) {
+                    $this->model->CompanyTagModel->addTagToCompany($company['id'], $tagId);
+                }
+            }
+            
+            ResponceApi::returnData(['message' => 'Company created successfully', 'company' => $company], 201);
+        } catch (Exception $e) {
+            ResponceApi::returnData(['error' => 'Failed to create company'], 400);
+        }
+    }
+
+    public function updateCompany()
+    {
+        $data = $this->getPostData();
+        
+        $requiredFields = ['id', 'name'];
+        $this->validateFields($requiredFields, $data);
+        
+        $this->load->model('CompanyModel');
+        $this->load->model('TagModel');
+        $this->load->model('CompanyTagModel');
+        
+        $company = $this->model->CompanyModel->get($data['id']);
+        if (!$company) {
+            ResponceApi::returnData(['error' => 'Company not found'], 404);
+        }
+        
+        $name = trim($data['name']);
+        $description = trim($data['description'] ?? '');
+        $website = trim($data['website'] ?? '');
+        $slug = trim($data['slug'] ?? '');
+        $tagIds = $data['tags'] ?? [];
+        
+        if (empty($name)) {
+            ResponceApi::returnData(['error' => 'Company name is required'], 400);
+        }
+        
+        if (empty($slug)) {
+            $slug = strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $name));
+            $slug = trim($slug, '-');
+        }
+        
+        $existing = $this->model->CompanyModel->findBySlug($slug);
+        if ($existing && $existing['id'] != $data['id']) {
+            ResponceApi::returnData(['error' => 'A company with this slug already exists'], 400);
+        }
+        
+        try {
+            $updateData = [
+                'name' => $name,
+                'description' => $description,
+                'slug' => $slug,
+                'website' => $website
+            ];
+            
+            $this->model->CompanyModel->update($data['id'], $updateData);
+            
+            $currentTags = $this->model->CompanyTagModel->getTagsByCompany($data['id']);
+            $currentTagIds = array_column($currentTags, 'id');
+            
+            foreach ($tagIds as $tagId) {
+                if (!in_array($tagId, $currentTagIds)) {
+                    $this->model->CompanyTagModel->addTagToCompany($data['id'], $tagId);
+                }
+            }
+            
+            foreach ($currentTagIds as $tagId) {
+                if (!in_array($tagId, $tagIds)) {
+                    $this->model->CompanyTagModel->removeTagFromCompany($data['id'], $tagId);
+                }
+            }
+            
+            ResponceApi::returnData(['message' => 'Company updated successfully']);
+        } catch (Exception $e) {
+            ResponceApi::returnData(['error' => 'Failed to update company'], 400);
+        }
+    }
+
+    public function deleteCompany()
+    {
+        $data = $this->getPostData();
+        
+        $requiredFields = ['id'];
+        $this->validateFields($requiredFields, $data);
+        
+        $this->load->model('CompanyModel');
+        $company = $this->model->CompanyModel->get($data['id']);
+        
+        if (!$company) {
+            ResponceApi::returnData(['error' => 'Company not found'], 404);
+        }
+        
+        try {
+            $this->model->CompanyModel->delete($data['id']);
+            ResponceApi::returnData(['message' => 'Company deleted successfully']);
+        } catch (Exception $e) {
+            ResponceApi::returnData(['error' => 'Failed to delete company'], 400);
+        }
+    }
+
+    public function createTag()
+    {
+        $data = $this->getPostData();
+        
+        $requiredFields = ['name'];
+        $this->validateFields($requiredFields, $data);
+        
+        $this->load->model('TagModel');
+        
+        $name = trim($data['name']);
+        $color = trim($data['color'] ?? '#3b82f6');
+        $description = trim($data['description'] ?? '');
+        
+        if (empty($name)) {
+            ResponceApi::returnData(['error' => 'Tag name is required'], 400);
+        }
+        
+        $existing = $this->model->TagModel->findByName($name);
+        if ($existing) {
+            ResponceApi::returnData(['error' => 'A tag with this name already exists'], 400);
+        }
+        
+        try {
+            $tagData = [
+                'name' => $name,
+                'color' => $color,
+                'description' => $description
+            ];
+            
+            $this->model->TagModel->add($tagData);
+            $tag = $this->model->TagModel->findByName($name);
+            
+            ResponceApi::returnData(['message' => 'Tag created successfully', 'tag' => $tag], 201);
+        } catch (Exception $e) {
+            ResponceApi::returnData(['error' => 'Failed to create tag'], 400);
+        }
+    }
+
+    public function updateTag()
+    {
+        $data = $this->getPostData();
+        
+        $requiredFields = ['id', 'name'];
+        $this->validateFields($requiredFields, $data);
+        
+        $this->load->model('TagModel');
+        
+        $tag = $this->model->TagModel->get($data['id']);
+        if (!$tag) {
+            ResponceApi::returnData(['error' => 'Tag not found'], 404);
+        }
+        
+        $name = trim($data['name']);
+        $color = trim($data['color'] ?? '#3b82f6');
+        $description = trim($data['description'] ?? '');
+        
+        if (empty($name)) {
+            ResponceApi::returnData(['error' => 'Tag name is required'], 400);
+        }
+        
+        $existing = $this->model->TagModel->findByName($name);
+        if ($existing && $existing['id'] != $data['id']) {
+            ResponceApi::returnData(['error' => 'A tag with this name already exists'], 400);
+        }
+        
+        try {
+            $updateData = [
+                'name' => $name,
+                'color' => $color,
+                'description' => $description
+            ];
+            
+            $this->model->TagModel->update($data['id'], $updateData);
+            
+            ResponceApi::returnData(['message' => 'Tag updated successfully']);
+        } catch (Exception $e) {
+            ResponceApi::returnData(['error' => 'Failed to update tag'], 400);
+        }
+    }
+
+    public function deleteTag()
+    {
+        $data = $this->getPostData();
+        
+        $requiredFields = ['id'];
+        $this->validateFields($requiredFields, $data);
+        
+        $this->load->model('TagModel');
+        $tag = $this->model->TagModel->get($data['id']);
+        
+        if (!$tag) {
+            ResponceApi::returnData(['error' => 'Tag not found'], 404);
+        }
+        
+        try {
+            $this->model->TagModel->delete($data['id']);
+            ResponceApi::returnData(['message' => 'Tag deleted successfully']);
+        } catch (Exception $e) {
+            ResponceApi::returnData(['error' => 'Failed to delete tag'], 400);
+        }
     }
 }

@@ -73,12 +73,6 @@ class Review extends Controller
 
     private function companySingle($id)
     {
-        $post = $this->getPostData();
-        
-        if (!empty($post)) {
-            
-        }
-        
         $this->load->model('CompanyModel');
         $this->load->model('ReviewModel');
         $this->load->model('UserModel');

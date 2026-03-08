@@ -6,6 +6,7 @@ class ReviewApi extends ControllerApi
         'getCompany' => ["POST"],
         'listCompany' => ["GET"],
         'postReview' => ["POST"],
+        'getReview' => ["GET"],
     ];
 
     public $adminMethods = [
@@ -115,5 +116,42 @@ class ReviewApi extends ControllerApi
         } catch (Exception $e) {
             ResponceApi::returnData(['error' => 'Failed to post review'], 400);
         }
+    }
+
+    public function getReview()
+    {
+        $this->load->model('ReviewModel');
+        $this->load->model('CompanyModel');
+        $this->load->model('UserModel');
+        
+        $allReviews = $this->model->ReviewModel->getAll([], 'created_at DESC');
+        
+        $reviewsByCompany = [];
+        
+        foreach ($allReviews as $review) {
+            $companyId = $review['company_id'];
+            
+            if (!isset($reviewsByCompany[$companyId])) {
+                $company = $this->model->CompanyModel->get($companyId);
+                if ($company) {
+                    $ratingInfo = $this->model->ReviewModel->getAverageRating($companyId);
+                    $reviewsByCompany[$companyId] = [
+                        'company' => $company,
+                        'reviews' => [],
+                        'average_rating' => $ratingInfo['average_rating'] ?? 0,
+                        'total_reviews' => $ratingInfo['total_reviews'] ?? 0
+                    ];
+                }
+            }
+            
+            if ($review['user_id']) {
+                $user = $this->model->UserModel->get($review['user_id']);
+                $review['user'] = $user;
+            }
+            
+            $reviewsByCompany[$companyId]['reviews'][] = $review;
+        }
+        
+        ResponceApi::returnData(['reviewsByCompany' => array_values($reviewsByCompany)]);
     }
 }

@@ -44,7 +44,7 @@ A comprehensive PHP-based web application for reviewing companies, built with a 
 
 ```
 php/
-├── src/
+├── php_src/
 │   ├── assets/
 │   │   ├── css/          # Stylesheets (modular CSS files)
 │   │   │   ├── admin.css

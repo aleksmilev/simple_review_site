@@ -7,6 +7,9 @@ class ReviewApi extends ControllerApi
         'listCompany' => ["GET"],
         'postReview' => ["POST"],
         'getReview' => ["GET"],
+        'getTags' => ["GET"],
+        'searchByCompany' => ["POST"],
+        'searchByTag' => ["POST"],
     ];
 
     public $adminMethods = [
@@ -153,5 +156,63 @@ class ReviewApi extends ControllerApi
         }
         
         ResponceApi::returnData(['reviewsByCompany' => array_values($reviewsByCompany)]);
+    }
+
+    public function getTags()
+    {
+        $this->load->model('CompanyTagModel');
+        $tags = $this->model->CompanyTagModel->getAll([], 'name ASC');
+        ResponceApi::returnData(['tags' => $tags]);
+    }
+
+    public function searchByCompany()
+    {
+        $data = $this->getPostData();
+        
+        $requiredFields = ['query'];
+        $this->validateFields($requiredFields, $data);
+        
+        $query = trim($data['query']);
+        
+        if (empty($query)) {
+            ResponceApi::returnData(['error' => 'Query cannot be empty'], 400);
+        }
+        
+        $this->load->model('CompanyModel');
+        $this->load->model('ReviewModel');
+        
+        $companies = $this->model->CompanyModel->search($query);
+        
+        foreach ($companies as &$company) {
+            $ratingInfo = $this->model->ReviewModel->getAverageRating($company['id']);
+            $company['average_rating'] = $ratingInfo['average_rating'] ?? 0;
+            $company['total_reviews'] = $ratingInfo['total_reviews'] ?? 0;
+        }
+        
+        ResponceApi::returnData(['companies' => $companies, 'query' => $query]);
+    }
+
+    public function searchByTag()
+    {
+        $data = $this->getPostData();
+        
+        $requiredFields = ['tag_id'];
+        $this->validateFields($requiredFields, $data);
+        
+        $tagId = intval($data['tag_id']);
+        
+        $this->load->model('CompanyModel');
+        $this->load->model('ReviewModel');
+        $this->load->model('CompanyTagModel');
+        
+        $companies = $this->model->CompanyTagModel->getCompaniesByTag($tagId);
+        
+        foreach ($companies as &$company) {
+            $ratingInfo = $this->model->ReviewModel->getAverageRating($company['id']);
+            $company['average_rating'] = $ratingInfo['average_rating'] ?? 0;
+            $company['total_reviews'] = $ratingInfo['total_reviews'] ?? 0;
+        }
+        
+        ResponceApi::returnData(['companies' => $companies, 'tag_id' => $tagId]);
     }
 }

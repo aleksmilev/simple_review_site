@@ -291,7 +291,7 @@ The application uses a custom dynamic routing system:
 
 You can use the provided setup script:
 ```bash
-./set_up.sh
+sudo bash set_up.sh
 ```
 
 This script will:
